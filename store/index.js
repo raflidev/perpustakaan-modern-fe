@@ -1,5 +1,5 @@
 export const state = () => ({
-    user:{}
+    user:{},
 })
 
 // getters 
@@ -14,7 +14,6 @@ export const actions = {
 // mutations 
 export const mutations = {
     addUser(state,user) {
-        state.user = {}
         state.user = user
     }
 }
