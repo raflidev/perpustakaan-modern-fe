@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar/>
-    <div class="flex justify-center space-x-6">
+    <div class="flex justify-center space-x-6 mt-8">
       <div class="w-1/2 h-3/4">
         <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
           <div v-show="showScanConfirmation" class="scan-confirmation">
@@ -12,12 +12,12 @@
         </qrcode-stream>
       </div>
       <div class="w-1/2">
-        <h1 class="text-xl">Buku yang akan dipinjam</h1>
+        <h1 class="text-2xl font-medium">Buku yang akan dipinjam</h1>
         <p class="decode-result">Scanan Terakhir: <b>{{ result }}</b></p>
 
         <div class="mt-4">
           <div v-if="buku.length == 0">
-            <p class="text-center font-bold">Silakan Scan QR Code Untuk Menginput Buku</p>
+            <p class="text-center font-bold mt-60">Silakan Scan QR Code Untuk Menginput Buku</p>
           </div>
           <div  v-for="buku in buku" :key="buku.index" class="w-full bg-blue-100 border-2 border-black rounded p-4 mb-6">
             <div class="flex justify-between items-center">
@@ -37,7 +37,7 @@
           </div>
 
           <div v-if="buku.length > 0">
-            <button class="p-4 bg-yellow-300 font-bold rounded">Pinjam Buku </button>
+            <button class="p-4 bg-yellow-300 font-bold rounded" @click="borrowBook">Pinjam Buku </button>
           </div>
         </div>
       </div>
@@ -59,7 +59,29 @@ export default {
     }
   },
   methods: {
+    borrowBook() {
+      this.$swal.fire({
+      title: 'Ingin meminjam buku?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: `Pinjam`,
+    }).then((result) => { 
+      if (result.isConfirmed) {
+        const user = JSON.parse(localStorage.getItem('user_perpus'))[0];
 
+        this.buku.map(buku => {
+          this.$axios.post('http://localhost:4000/api/borrow', {
+            user_id: user._id,
+            book_id: buku._id
+          })
+        }).then(() => {
+          this.$swal.fire('Berhasil meminjam buku', '', 'success')
+        }).catch(err => {
+          this.$swal.fire('Gagal meminjam buku', err, 'error')
+        })
+      }
+    })
+    },
     async onInit (promise) {
       try {
         await promise
