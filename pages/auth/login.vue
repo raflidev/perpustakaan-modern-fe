@@ -39,9 +39,11 @@ data(){
   }
 },
 created(){
-  const local = localStorage.getItem('user_perpus');
-  if(local !== null) {
-    this.$router.push('/');
+  if(typeof window !== 'undefined'){
+    const local = localStorage.getItem('user_perpus');
+    if(local !== null) {
+      this.$router.push('/');
+    }
   }
 },
 methods:{
@@ -54,14 +56,20 @@ methods:{
 
     if (data.request.status === 200 && data.data.length > 0) {
       this.login = true
+      this.$swal.fire('Anda Berhasil Login', '', 'success')
       this.notification = "berhasil login"
       this.$store.commit('addUser', data)
       localStorage.setItem("user_perpus", JSON.stringify(data.data))
       setTimeout(() => {
         this.$router.push('/');
       }, 2000);
+    } else if (data.request.status === 500) {
+      this.login = false
+      this.$swal.fire('Server error 500', 'ada kesalahan server, mohon tunggu beberapa saat', 'error')
+      this.notification = "server error 500"
     } else {
       this.login = false
+      this.$swal.fire('Email Atau Password Anda Salah', '', 'error')
       this.notification = "email atau password anda salah"
     }
   },

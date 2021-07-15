@@ -24,7 +24,7 @@ methods: {
   tryLogout(){
     if(typeof window !== 'undefined'){
       localStorage.removeItem('user_perpus');
-      this.$router.push("/")
+      this.$router.push("/logout")
       // bikin logout page
       // push lagi
     }
