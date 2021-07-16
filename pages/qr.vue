@@ -5,9 +5,6 @@
       <div class="w-1/2 h-3/4">
         <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
           <div v-show="showScanConfirmation" class="scan-confirmation">
-            <svg xmlns="http://www.w3.org/2000/svg" class="text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
           </div>
         </qrcode-stream>
       </div>
@@ -73,11 +70,12 @@ export default {
           this.$axios.post('http://localhost:4000/api/borrow', {
             user_id: user._id,
             book_id: buku._id
-          })
-        }).then(() => {
+          }).then(() => {
           this.$swal.fire('Berhasil meminjam buku', '', 'success')
-        }).catch(err => {
+          this.buku = []
+          }).catch(err => {
           this.$swal.fire('Gagal meminjam buku', err, 'error')
+          })
         })
       }
     })
@@ -118,13 +116,22 @@ export default {
     async cekBuku(kode) {
       if(kode !== null) {
         const cekIndex = this.buku.map(x => x._id).indexOf(kode);
-        if (cekIndex < 0) {
-          const buku = await this.$axios.$get(`http://localhost:4000/api/book/${kode}`)
-          this.buku.push(buku)
-          this.result = buku.name
-          this.notification = `Berhasil menambahkan ${buku.name}`
-        }else{
-          this.notification = `Buku ${buku.name} hanya boleh dipinjam 1 saja`
+        if (cekIndex >= 0) {
+          this.$swal.fire('buku hanya boleh dipinjam 1', '', 'error');
+        }
+        if (cekIndex == -1) {
+          const user = JSON.parse(localStorage.getItem('user_perpus'))[0];
+          const daftarBuku = await this.$axios.$get(`http://localhost:4000/api/borrow/${kode}/user/${user._id}`);
+          console.log(daftarBuku);
+          if (daftarBuku.length > 0) {
+          this.$swal.fire('buku sudah anda pinjam', '', 'error');
+          }
+          if (daftarBuku.length == 0) {
+            const buku = await this.$axios.$get(`http://localhost:4000/api/book/${kode}`)
+            this.buku.push(buku)
+            this.result = buku.name
+            this.notification = `Berhasil menambahkan ${buku.name}`
+          }
         }
       }
     },
