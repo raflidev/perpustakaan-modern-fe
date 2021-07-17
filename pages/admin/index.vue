@@ -1,16 +1,6 @@
 <template>
   <div class="flex">
-      <div class="w-1/6 bg-blue-100 h-screen">
-        <h1 class="text-center font-bold text-xl my-7">PerpusModern</h1>
-        <div class="px-3 flex flex-col">
-          <router-link to="/">Dashboard</router-link>
-          <!-- Petugas -->
-          <router-link to="/">User</router-link>
-          <router-link to="/">Pengembalian</router-link>
-          <!-- User -->
-          <router-link to="/">Setting</router-link>
-        </div>
-      </div>
+      <Sidebar/>
       <div class="w-5/6 h-screen">
         <div class="p-10">
           <div class="space-y-2 mb-6">
@@ -19,7 +9,10 @@
             </h1>
             <p>Detail Buku-Buku Yang Dipinjam</p>
           </div>
-          <div>
+          <div v-if="buku.length == 0" class="bg-red-400 rounded p-4 text-white">
+            Library anda kosong, silakan pinjam buku
+          </div>
+          <div v-else>
             <div class="grid grid-cols-3 gap-4">
               <div class="bg-blue-100 p-4 rounded divide-y divide-black" v-for="(buku, index) in buku" :key="buku.index">
                 <div class="pb-4">
@@ -53,7 +46,6 @@
 </template>
 
 <script>
-import "moment-countdown"
 import moment from 'moment'
 export default {
   name: "admin",
@@ -76,14 +68,12 @@ export default {
     const local = localStorage.getItem('user_perpus');
     if(local !== null) {
       const data = JSON.parse(local)
-      console.log(data[0]);
       const dataBuku = await this.$axios.$get(`http://localhost:4000/api/borrow/user/${data[0]._id}`)
       this.dataBuku = dataBuku
       dataBuku.map(async (x) => {
         const buku = await this.$axios.$get(`http://localhost:4000/api/book/${x.book_id}`)
         this.buku.push(buku)
       })
-      // this.buku = buku
     }
   } 
   }

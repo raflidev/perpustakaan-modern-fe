@@ -8,7 +8,7 @@
     <div class="space-x-5 flex items-center" v-else>
       <div class="text-lg">Selamat datang, <span class="font-medium">{{ (user.full_name == null) ? user.username : user.full_name }}</span></div>
       <router-link to="/admin" class="bg-blue-800 px-4 py-2 rounded font-bold">Admin</router-link>
-      <button class="bg-blue-800 px-4 py-2 rounded font-bold" @click="tryLogout">Logout</button>
+      <router-link to="/logout" class="bg-blue-800 px-4 py-2 rounded font-bold">Logout</router-link>
     </div>
 </div>
 </template>
@@ -18,16 +18,6 @@ export default {
 data(){
   return {
     user: []
-  }
-},
-methods: {
-  tryLogout(){
-    if(typeof window !== 'undefined'){
-      localStorage.removeItem('user_perpus');
-      this.$router.push("/logout")
-      // bikin logout page
-      // push lagi
-    }
   }
 },
 created(){
