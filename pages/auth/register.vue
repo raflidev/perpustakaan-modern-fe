@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="w-screen h-screen bg-gray-400">
+      <div class="w-screen h-screen bg-blue-100">
           <div class="flex h-full justify-center items-center">
               <div class="w-1/3 min-h-0 bg-white rounded-md p-4">
                 <div class="text-center">
@@ -31,8 +31,9 @@
                     <label for="comfirm_password">Comfirm password</label>
                     <input type="password" v-model="confirm_password" name="comfirm_password" placeholder="Comfirm password" id="confirm" class="rounded-md border-blue-400 border w-full p-2">
                   </div>
-                  <button v-if="(password != null && confirm_password != null) && password == confirm_password" type="submit" @click="tryRegis" class="w-full bg-blue-400 rounded-md p-2 font-medium">Register</button>
+                  <button v-if="(password != null && confirm_password != null) && password == confirm_password" type="submit" @click="tryRegis" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Register</button>
                   <button v-else class="w-full bg-gray-400 rounded-md p-2 font-medium" disabled>Register</button>
+                  <p class="mt-3">Sudah punya akun? <router-link class="text-blue-700" to="/auth/login">Login</router-link> </p>
                 </form>
               </div>
           </div>

@@ -9,8 +9,33 @@
             </h1>
             <p>Detail Buku-Buku Yang Dipinjam</p>
           </div>
-          <div v-if="buku.length == 0" class="bg-red-400 rounded p-4 text-white">
-            Library anda kosong, silakan pinjam buku
+           <!-- animate-pulse -->
+          <div v-if="buku.length == 0">
+            <div class="grid grid-cols-3 gap-4" v-if="checkContent">
+              <div class="bg-blue-100 p-4 rounded divide-y divide-black animate-pulse" v-for="a in 3" :key="a.index">
+                <div class="pb-4">
+                  <h1 class="font-bold text-xl w-full h-8 bg-blue-300 rounded">
+                  </h1>
+                  <div class="font-medium w-full h-4 bg-blue-300 rounded mt-2">
+                    </div>
+                </div>
+                <div class="pt-4">
+                  <div>
+                    <div class="font-medium w-full h-4 bg-blue-300 rounded">
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <div class="font-medium w-full h-4 bg-blue-300 rounded">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <p class="bg-red-400 rounded p-4 text-white w-1/2">
+                Library anda kosong, silakan pinjam buku
+              </p>
+            </div>
           </div>
           <div v-else>
             <div class="grid grid-cols-3 gap-4">
@@ -52,7 +77,8 @@ export default {
   data(){
     return {
       buku: [],
-      dataBuku: []
+      dataBuku: [],
+      checkContent: true
     }
   },
   methods: {
@@ -70,6 +96,9 @@ export default {
       const data = JSON.parse(local)
       const dataBuku = await this.$axios.$get(`http://localhost:4000/api/borrow/user/${data[0]._id}`)
       this.dataBuku = dataBuku
+      if(this.dataBuku.length === 0){
+        this.checkContent = false
+      }
       dataBuku.map(async (x) => {
         const buku = await this.$axios.$get(`http://localhost:4000/api/book/${x.book_id}`)
         this.buku.push(buku)

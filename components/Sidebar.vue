@@ -18,7 +18,7 @@
           <div class="flex flex-col my-5">
             <span class="text-xs font-bold">USER</span>
             <router-link to="/admin/setting">Setting</router-link>
-            <router-link to="/logout">Logout</router-link>
+            <button @click="tryLogout" class="text-left">Logout</button>
           </div>
         </div>
       </div>
@@ -31,8 +31,22 @@ data(){
         user: {}
     }
 },
+methods:{
+  tryLogout(){
+    this.$swal.fire({
+      icon: 'question',
+      title: 'Ingin Logout?',
+      showCancelButton: true,
+      confirmButtonText: `Ya`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.$router.push('/logout')
+      }
+    })
+  }
+},
 async created() {
-    if(typeof window !== 'undefined'){
+  if(typeof window !== 'undefined'){
     const local = localStorage.getItem('user_perpus');
     if(local !== null) {
       const data = JSON.parse(local)

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="w-screen h-screen bg-gray-400">
+      <div class="w-screen h-screen bg-blue-100">
           <div class="flex h-full justify-center items-center">
               <div class="w-1/3 min-h-0 bg-white rounded-md p-4">
                 <div class="text-center">
@@ -20,7 +20,8 @@
                     <input id="password" v-model="password" type="password" name="password" placeholder="password" class="rounded-md border-blue-400 border w-full p-2">
                   </div>
                 </div>
-                  <button @click="Trylogin()" class="w-full bg-blue-400 rounded-md p-2 font-medium">Login</button>
+                  <button @click="Trylogin()" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Login</button>
+                  <p class="mt-3">Belum punya akun? <router-link class="text-blue-700" to="/auth/register">Register</router-link> </p>
               </div>
           </div>
       </div>
