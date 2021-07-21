@@ -871,6 +871,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
+"@djanoskova/vue-image-blur@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@djanoskova/vue-image-blur/-/vue-image-blur-0.2.7.tgz#51fd0e909946089c3726743ecf117c17553398c7"
+  integrity sha512-9fJ96xOWwjzyolgFp06aq4nqNO+9XSW2xGdMxBX8Nrt5dKikbFyEyKkW3/cTNfu3I/YYiR+UQnZIkztAnQvaWg==
+
 "@fullhuman/postcss-purgecss@^3.1.3":
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/@fullhuman/postcss-purgecss/-/postcss-purgecss-3.1.3.tgz#47af7b87c9bfb3de4bc94a38f875b928fffdf339"

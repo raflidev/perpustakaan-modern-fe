@@ -3,12 +3,17 @@
     <Navbar/>
     <div class="container mx-auto px-8">
       <div class="h-screen">
-        <div class=" flex justify-center space-x-6 items-center -mt-12 h-full">
+        <div class="flex justify-center space-x-6 items-center -mt-12 h-full">
           <div>
             <h1 class="text-7xl font-bold pb-10">Perpustakaan Modern Berbasis Komputer</h1>
             <router-link to="/auth/login" class="p-4 bg-blue-500 rounded text-white font-medium text-lg">Mulai Pinjam Buku!</router-link>
           </div>
-          <img src="/6607.jpg" class="pt-3" width="800">
+          <div class="w-full">
+            <ImageBlur
+              image="/6607.jpg"
+              thumb="/6607.jpg"/>
+          </div>
+          <!-- <img src="" class="pt-3" width="800"> -->
         </div>
       </div>
       <div class="h-screen py-8">
@@ -50,10 +55,13 @@
 
 <script>
 export default {
-name:"index",
+name:"index"
 }
 </script>
 
 <style>
-
+.image-blur {
+    width: 100%;
+    height: 373px;
+  }
 </style>
