@@ -2,21 +2,18 @@
   <div>
     <Navbar/>
     <div class="container mx-auto px-8">
-      <div class="h-screen">
+      <div class="mt-40">
         <div class="flex justify-center space-x-6 items-center -mt-12 h-full">
           <div>
-            <h1 class="text-7xl font-bold pb-10">Perpustakaan Modern Berbasis Komputer</h1>
+            <h1 class="text-7xl font-bold pb-10 w-full">Perpustakaan Modern Berbasis Komputer</h1>
             <router-link to="/auth/login" class="p-4 bg-blue-500 rounded text-white font-medium text-lg">Mulai Pinjam Buku!</router-link>
           </div>
           <div class="w-full">
-            <ImageBlur
-              image="/6607.jpg"
-              thumb="/6607.jpg"/>
+          <img src="/6607.jpg" alt="perpustakaan" class="pt-3" width="800">
           </div>
-          <!-- <img src="" class="pt-3" width="800"> -->
         </div>
       </div>
-      <div class="h-screen py-8">
+      <div class="mt-40 py-8">
         <div class="pb-12 text-center">
           <h1 class="text-4xl font-bold pb-4">Keunggulan Sistem Kami</h1>
           <p class="text-xl">Keunggulan sistem kami terhadap perpustakaan konvensional, yaitu antara lain</p>
@@ -62,6 +59,6 @@ name:"index"
 <style>
 .image-blur {
     width: 100%;
-    height: 373px;
+    height: 400px;
   }
 </style>

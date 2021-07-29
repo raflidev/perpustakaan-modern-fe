@@ -1,8 +1,9 @@
 <template>
   <div>
-      <div class="w-screen h-screen bg-blue-100">
+      <Navbar/>
+      <div class="min-h-screen">
           <div class="flex h-full justify-center items-center">
-              <div class="w-1/3 min-h-0 bg-white rounded-md p-4">
+              <div class="w-1/3 min-h-0 bg-white rounded-md p-4 border border-black my-10">
                 <div class="text-center">
                     <h1 class="font-bold text-2xl">Register</h1>
                     <p>Silakan buat akun terlebih dahulu</p>
@@ -21,7 +22,7 @@
                   </div>
                   <div>
                     <label for="email">Email</label>
-                    <input type="email" v-model="email" name="email" placeholder="email" id="email" class="rounded-md border-blue-400 border w-full p-2">
+                    <input type="email" v-model="email" name="email" @change="regexEmail" placeholder="email" id="email" class="rounded-md border-blue-400 border w-full p-2">
                   </div>
                   <div>
                     <label for="password">Password</label>
@@ -31,7 +32,7 @@
                     <label for="comfirm_password">Comfirm password</label>
                     <input type="password" v-model="confirm_password" name="comfirm_password" placeholder="Comfirm password" id="confirm" class="rounded-md border-blue-400 border w-full p-2">
                   </div>
-                  <button v-if="(password != null && confirm_password != null) && password == confirm_password" type="submit" @click="tryRegis" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Register</button>
+                  <button v-if="(password != null && confirm_password != null) && password == confirm_password && emailConfirm" type="submit" @click="tryRegis" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Register</button>
                   <button v-else class="w-full bg-gray-400 rounded-md p-2 font-medium" disabled>Register</button>
                   <p class="mt-3">Sudah punya akun? <router-link class="text-blue-700" to="/auth/login">Login</router-link> </p>
                 </form>
@@ -52,34 +53,47 @@ data(){
     password:null,
     confirm_password:null,
     notification: null,
-    register: false
+    register: false,
+    emailConfirm: false
   }
 },
 methods:{
+  // tamnbahan untuk user verification
+  regexEmail(){
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(re.test(this.email)){
+      this.emailConfirm = true
+    }else{
+      this.emailConfirm = false
+    }
+  },
   tryRegis(){
-    this.$axios.$post("http://localhost:4000/api/user", {
-      full_name:this.full_name,
-      email:this.email,
-      username:this.username,
-      password:this.password,
-      valid:false,
-      role:false,
-    }).then(()=>{
-      this.full_name=null,
-      this.email=null,
-      this.username=null,
-      this.password=null,
-      this.confirm_password=null
-
-      this.notification = "berhasil membuat akun"
-      this.register = true
-      setTimeout(() => {
-        this.$router.push("/")
-      }, 3000);
-    }).catch(err => {
-      this.register = false
-      this.notification = err
-    })
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(re.test(this.email)){
+      this.$axios.$post("http://localhost:4000/api/user", {
+        full_name:this.full_name,
+        email:this.email,
+        username:this.username,
+        password:this.password,
+        valid:false,
+        role:false,
+      }).then(()=>{
+        this.full_name=null,
+        this.email=null,
+        this.username=null,
+        this.password=null,
+        this.confirm_password=null
+  
+        this.notification = "berhasil membuat akun"
+        this.register = true
+        setTimeout(() => {
+          this.$router.push("/")
+        }, 3000);
+      }).catch(err => {
+        this.register = false
+        this.notification = err
+      })
+    }
   }
 }
 }

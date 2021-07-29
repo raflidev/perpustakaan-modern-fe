@@ -51,6 +51,13 @@
                 <div class="pt-4">
                   <div>
                     <span class="font-medium">
+                      Status: 
+                    </span>
+                    <span v-if="deadline(dataBuku[index].finishBorrow)" class="text-green-500 font-bold">Dipinjamkan</span>
+                    <span v-else class="text-red-500 font-bold">Segera Kembalikan</span>
+                  </div>
+                  <div>
+                    <span class="font-medium">
                       Meminjam: 
                     </span>
                     {{tanggal(dataBuku[index].createAt)}}
@@ -86,8 +93,8 @@ export default {
       return moment(date).format("LL")
     },
     deadline(date) {
-      return moment(date).format("LL")
-    }
+      return moment().isBefore(date)
+    },
   },
   async created() {
     if(typeof window !== 'undefined'){
