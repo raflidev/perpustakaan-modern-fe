@@ -15,9 +15,12 @@
                     </li>
                     <li>Tanya ke petugas untuk mengadministrasi peminjaman buku</li>
                     <li>Scan QR code buku ke kamera, sampai terlihat di komputer
-                        <img src="/guide/2.jpg" alt="guide 1" class="w-1/2">
+                        <img src="/guide/2.jpg" alt="guide 2" class="w-1/2">
                     </li>
-                    <li>Lalu tekan pinjam</li>
+                    <li>
+                      Lalu tekan pinjam
+                      <img src="/guide/3.jpg" alt="guide 3" class="w-1/2">
+                    </li>
                 </ul>
             </div>
           </div>

@@ -32,18 +32,29 @@
                 </tr> 
                 </table>
             </div>
-
-            <div v-if="qr_id" class="absolute top-0 right-2 p-4 border border-black bg-white">
-              <h1 class="text-center font-bold">Generate QR Code</h1>
-              <p class="text-center">{{qr_name}}</p>
-              <svg xmlns="http://www.w3.org/2000/svg"  @click="(()=> {qr_id = null})" class="h-6 w-6 absolute top-4 right-4 hover:text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              <div class="flex justify-center">
-                <VueQrcode :value="qr_id" tag="img" :options="{ width: 280 }"></VueQrcode>
+            <div v-if="qr_id" class="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none" id="modal-id">
+                <div class="absolute bg-black opacity-40 -mt-2 inset-0 z-0"></div>
+                <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white ">
+                  <!--content-->
+                  <div class="">
+                    <!--body-->
+                    <div class="text-center p-5 flex-auto justify-center">
+                      <h1 class="text-center font-bold">Generate QR Code</h1>
+                      <p class="text-center">{{qr_name}}</p>
+                      <div class="flex justify-center">
+                        <VueQrcode :value="qr_id" tag="img" :options="{ width: 300 }"></VueQrcode>
+                      </div>
+                      <p class="text-center">Download QRcode: <br> Klik kanan > Save image</p>
+                    </div>
+                    <!--footer-->
+                    <div class="p-3  mt-2 text-center space-x-4 md:block">
+                        <button  @click="(()=> {qr_id = null})"  class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-white rounded-full hover:shadow-lg  bg-red-500 hover:bg-red-600">
+                            Oke
+                        </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <p class="text-center">Download QRcode: <br> Klik kanan > Save image</p>
-            </div>
           </div>
          </div>
       </div>
