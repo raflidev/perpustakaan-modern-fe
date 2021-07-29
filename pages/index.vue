@@ -6,7 +6,8 @@
         <div class="flex justify-center space-x-6 items-center -mt-12 h-full">
           <div>
             <h1 class="text-7xl font-bold pb-10 w-full">Perpustakaan Modern Berbasis Komputer</h1>
-            <router-link to="/auth/login" class="p-4 bg-blue-500 rounded text-white font-medium text-lg">Mulai Pinjam Buku!</router-link>
+            <router-link v-if="user.length === 0" to="/auth/login" class="p-4 bg-blue-500 rounded text-white font-medium text-lg">Mulai Pinjam Buku!</router-link>
+            <router-link v-else to="/admin" class="p-4 bg-blue-500 rounded text-white font-medium text-lg">Mulai Pinjam Buku!</router-link>
           </div>
           <div class="w-full">
           <img src="/6607.jpg" alt="perpustakaan" class="pt-3" width="800">
@@ -52,13 +53,20 @@
 
 <script>
 export default {
-name:"index"
+name:"index",
+data(){
+  return {
+    user: []
+  }
+},
+created(){
+  if (typeof window !== 'undefined') {
+    const local = localStorage.getItem('user_perpus');
+    if (local !== null) {
+      const user = JSON.parse(local)
+      this.user = user[0]
+    }
+  }
+}
 }
 </script>
-
-<style>
-.image-blur {
-    width: 100%;
-    height: 400px;
-  }
-</style>

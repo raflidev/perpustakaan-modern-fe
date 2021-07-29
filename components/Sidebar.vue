@@ -1,5 +1,5 @@
 <template>
-   <div class="w-1/6 bg-blue-100 h-screen">
+   <div class="w-1/6 bg-blue-100 min-h-screen">
         <h1 class="text-center font-bold text-xl my-7">PerpusModern</h1>
         <div class="px-3">
           <div class="flex flex-col my-5 divide-y">
@@ -10,6 +10,7 @@
           <div v-show="user.role" class="flex flex-col my-5">
             <span class="text-xs font-bold">ADMIN</span>
             <router-link to="/admin/user" exact-active-class="active">User</router-link>
+            <router-link to="/admin/buku" active-class="active">Buku</router-link>
             <router-link to="/admin/pinjam" exact-active-class="active">Pinjam Buku</router-link>
             <router-link to="/admin/pengembalian" exact-active-class="active">Pengembalian</router-link>
           </div>
@@ -17,6 +18,7 @@
 
           <div class="flex flex-col my-5">
             <span class="text-xs font-bold">USER</span>
+            <router-link to="/admin/keterangan">Pinjam</router-link>
             <router-link to="/admin/setting">Setting</router-link>
             <button @click="tryLogout" class="text-left">Logout</button>
           </div>
