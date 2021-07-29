@@ -9,7 +9,7 @@
           <!-- Petugas -->
           <div v-show="user.role" class="flex flex-col my-5">
             <span class="text-xs font-bold">ADMIN</span>
-            <router-link to="/admin/user" exact-active-class="active">User</router-link>
+            <router-link to="/admin/user" active-class="active">User</router-link>
             <router-link to="/admin/buku" active-class="active">Buku</router-link>
             <router-link to="/admin/pinjam" exact-active-class="active">Pinjam Buku</router-link>
             <router-link to="/admin/pengembalian" exact-active-class="active">Pengembalian</router-link>

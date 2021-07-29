@@ -16,24 +16,26 @@
           <div v-if="buku.length == 0">
             <p class="text-center font-bold mt-60">Silakan Scan QR Code Untuk Menginput Buku</p>
           </div>
-          <div  v-for="buku in buku" :key="buku.index" class="w-full bg-blue-100 border-2 border-black rounded p-4 mb-6">
-            <div class="flex justify-between items-center">
-              <div>
-                <div class="text-xl font-bold">
-                  {{buku.name}}
+          <div class="overflow-y-auto h-96">
+            <div  v-for="buku in buku" :key="buku.index" class="w-full bg-blue-100 border-2 border-black rounded p-4 mb-6">
+              <div class="flex justify-between items-center">
+                <div>
+                  <div class="text-xl font-bold">
+                    {{buku.name}}
+                  </div>
+                  <div>
+                    {{buku.author}}
+                  </div>
                 </div>
                 <div>
-                  {{buku.author}}
+                  <button @click="deleteBook(buku._id)" class="py-2 px-4 bg-red-500 rounded text-white font-bold">Delete</button>
                 </div>
               </div>
-              <div>
-                <button @click="deleteBook(buku._id)" class="py-2 px-4 bg-red-500 rounded text-white font-bold">Delete</button>
-              </div>
-            </div>
 
+            </div>
           </div>
 
-          <div v-if="buku.length > 0">
+          <div v-if="buku.length > 0" class="mt-3">
             <button class="p-4 bg-yellow-300 font-bold rounded" @click="borrowBook">Pinjam Buku </button>
           </div>
         </div>

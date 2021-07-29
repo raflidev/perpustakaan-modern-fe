@@ -41,7 +41,7 @@
                       </span>
                     </div>
                 </div>
-                <button @click="editData()" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Tambah Data</button>
+                <button @click="editData()" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Edit Data</button>
             </div>
           </div>
          </div>
@@ -74,9 +74,8 @@ methods: {
                 author: this.author
             }).then(data => {
                 if (data.status == 200) {
-                    this.author = null
-                    this.title = null
-                    this.$swal.fire('Buku berhasil ditambahkan', '', 'success')
+                    this.$swal.fire('Buku berhasil diedit', '', 'success')
+                    this.$router.push('/admin/buku')
                 }
             })
         }else{

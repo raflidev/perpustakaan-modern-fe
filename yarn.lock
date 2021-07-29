@@ -866,15 +866,17 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@chenfengyuan/vue-qrcode@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@chenfengyuan/vue-qrcode/-/vue-qrcode-1.0.2.tgz#37d71902e166e1ae58176bd6cb9c40905c1b0949"
+  integrity sha512-hwy1d4YMJAyEh+V7dLPG8eAKACRvugzSB4ylwb6QNqo84KHTF50/5EJcBYdUhTRPfAqrxG0i6jDAXONWOGyQbQ==
+  dependencies:
+    qrcode "^1.4.4"
+
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
-
-"@djanoskova/vue-image-blur@^0.2.7":
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@djanoskova/vue-image-blur/-/vue-image-blur-0.2.7.tgz#51fd0e909946089c3726743ecf117c17553398c7"
-  integrity sha512-9fJ96xOWwjzyolgFp06aq4nqNO+9XSW2xGdMxBX8Nrt5dKikbFyEyKkW3/cTNfu3I/YYiR+UQnZIkztAnQvaWg==
 
 "@fullhuman/postcss-purgecss@^3.1.3":
   version "3.1.3"
