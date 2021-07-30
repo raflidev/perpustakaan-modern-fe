@@ -48,7 +48,7 @@
                     </div>
                     <!--footer-->
                     <div class="p-3  mt-2 text-center space-x-4 md:block">
-                        <button  @click="(()=> {qr_id = null})"  class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-white rounded-full hover:shadow-lg  bg-red-500 hover:bg-red-600">
+                        <button  @click="(()=> {qr_id = null})"  class="mb-2 md:mb-0 px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-white rounded-full hover:shadow-lg  bg-red-500 hover:bg-red-600">
                             Oke
                         </button>
                     </div>
