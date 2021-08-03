@@ -9,7 +9,7 @@
         </qrcode-stream>
       </div>
       <div class="w-1/2">
-        <h1 class="text-2xl font-medium">Buku yang akan dipinjam</h1>
+        <h1 class="text-2xl font-medium">Buku yang akan dikembalikan</h1>
         <p class="decode-result">Scanan Terakhir: <b>{{ result }}</b></p>
 
         <div class="mt-4">
@@ -36,7 +36,7 @@
           </div>
 
           <div v-if="buku.length > 0" class="mt-3">
-            <button class="p-4 bg-yellow-300 font-bold rounded" @click="borrowBook">Pinjam Buku </button>
+            <button class="p-4 bg-yellow-300 font-bold rounded" @click="borrowBook">Kembalikan Buku </button>
           </div>
         </div>
       </div>
@@ -55,28 +55,35 @@ export default {
       showScanConfirmation: false,
       a: null,
       buku: [],
+      borrow:[],
     }
   },
   methods: {
     borrowBook() {
       this.$swal.fire({
-      title: 'Ingin meminjam buku?',
+      title: 'Ingin mengembalikan buku?',
       icon: 'question',
       showCancelButton: true,
-      confirmButtonText: `Pinjam`,
+      confirmButtonText: `Kembalikan`,
     }).then((result) => { 
       if (result.isConfirmed) {
         const user = JSON.parse(localStorage.getItem('user_perpus'))[0];
 
-        this.buku.map(buku => {
-          this.$axios.post('http://localhost:4000/api/borrow', {
+        this.buku.map((buku, index) => {
+          this.$axios.post('http://localhost:4000/api/history', {
             user_id: user._id,
-            book_id: buku._id
+            book_id: buku._id,
+            borrow: this.borrow[index].createAt,
+            finishBorrow: this.borrow[index].finishBorrow,
           }).then(() => {
-          this.$swal.fire('Berhasil meminjam buku', '', 'success')
-          this.buku = []
-          }).catch(err => {
-          this.$swal.fire('Gagal meminjam buku', err, 'error')
+            this.borrow.map(borrow => {
+              this.$axios.delete(`http://localhost:4000/api/borrow/${borrow._id}`)
+            })
+            this.$swal.fire('Berhasil Mengembalikan buku', '', 'success')
+            this.buku = []
+            this.borrow = []
+            }).catch(err => {
+            this.$swal.fire('Gagal Mengembalikan buku', err, 'error')
           })
         })
       }
@@ -119,20 +126,18 @@ export default {
       if(kode !== null) {
         const cekIndex = this.buku.map(x => x._id).indexOf(kode);
         if (cekIndex >= 0) {
-          this.$swal.fire('buku hanya boleh dipinjam 1', '', 'error');
+          this.$swal.fire('Cukup scan 1 kali saja', '', 'error');
         }
         if (cekIndex == -1) {
           const user = JSON.parse(localStorage.getItem('user_perpus'))[0];
           const daftarBuku = await this.$axios.$get(`http://localhost:4000/api/borrow/${kode}/user/${user._id}`);
-          console.log(daftarBuku);
           if (daftarBuku.length > 0) {
-          this.$swal.fire('buku sudah anda pinjam', '', 'error');
+          this.borrow.push(daftarBuku[0])
+          const buku = await this.$axios.$get(`http://localhost:4000/api/book/${kode}`)
+          this.buku.push(buku)
           }
           if (daftarBuku.length == 0) {
-            const buku = await this.$axios.$get(`http://localhost:4000/api/book/${kode}`)
-            this.buku.push(buku)
-            this.result = buku.name
-            this.notification = `Berhasil menambahkan ${buku.name}`
+            this.$swal.fire('buku ini tidak anda pinjam', '', 'error');
           }
         }
       }
@@ -141,6 +146,21 @@ export default {
     deleteBook(id){
       const index = this.buku.map(x => x._id).indexOf(id);
       this.buku.splice(index, 1)
+    }
+  },
+  created(){
+    if (typeof window !== 'undefined') {
+      const user = JSON.parse(localStorage.getItem('user_perpus'));
+      if (user == null) {
+        this.$swal.fire('Belum login', 'silakan login terlebih dahulu', 'error');
+        this.$router.push('/auth/login')
+      }else{
+        const pc = localStorage.getItem('perpus_pc');
+        if(!pc) {
+          this.$swal.fire('Tidak punya hak', 'silakan ke perpus untuk meminjam buku. (komputer bukan superuser)', 'error');
+          this.$router.push('/admin')
+        }
+      }
     }
   }
 }

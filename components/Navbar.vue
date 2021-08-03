@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto p-7 text-white flex justify-between items-center">
-    <h1 class="text-2xl font-bold text-black">PerpusModern</h1>
+    <router-link to="/" class="text-2xl font-bold text-black hover:underline">PerpusModern</router-link>
     <div class="space-x-5" v-if="user.length == 0">
       <router-link to="/auth/login" class="hover:bg-blue-700 p-3 rounded text-blue-600 hover:text-white">Login</router-link>
       <router-link to="/auth/register" class="bg-blue-700 hover:bg-blue-800 p-3 rounded">Register</router-link>

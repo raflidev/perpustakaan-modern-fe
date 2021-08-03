@@ -72,6 +72,12 @@
               </div>
             </div>
           </div>
+
+          
+          <div class="mt-10" v-if='user.role'>
+            <button v-if="!pc" class="py-2 px-4 bg-blue-600 text-white rounded" @click="superUser">Jadikan Komputer Superuser</button>
+            <button v-else class="py-2 px-4 bg-blue-600 text-white rounded" @click="nonSuperUser">Non-aktifkan Komputer Superuser</button>
+          </div>
         </div>
       </div>
   </div>
@@ -85,7 +91,9 @@ export default {
     return {
       buku: [],
       dataBuku: [],
-      checkContent: true
+      checkContent: true,
+      user: [],
+      pc: false,
     }
   },
   methods: {
@@ -95,12 +103,48 @@ export default {
     deadline(date) {
       return moment().isBefore(date)
     },
+    superUser() {
+      this.$swal.fire({
+      title: 'Jadikan Komputer Superuser?',
+      icon: 'question',
+      text: 'komputer ini akan jadi alat pinjam dan pengembalian buku',
+      showCancelButton: true,
+      confirmButtonText: `Ya`,
+    }).then((result) => { 
+      if (result.isConfirmed) {
+       localStorage.setItem("perpus_pc", true);
+       const pc = localStorage.getItem('perpus_pc');
+       this.pc =pc
+       this.$swal.fire('Berhasil', "Komputer ini menjadi superuser", 'success');
+      }
+    })
+    },
+    nonSuperUser() {
+      this.$swal.fire({
+      title: 'Berhentikan Komputer Superuser?',
+      icon: 'question',
+      text: 'status komputer ini hilang jadi alat pinjam dan pengembalian buku',
+      showCancelButton: true,
+      confirmButtonText: `Ya`,
+    }).then((result) => { 
+      if (result.isConfirmed) {
+       localStorage.removeItem('perpus_pc');
+       this.pc = false
+       this.$swal.fire('Berhasil', "Komputer ini bukan superuser lagi", 'success');
+      }
+    })
+    },
   },
   async created() {
     if(typeof window !== 'undefined'){
-    const local = localStorage.getItem('user_perpus');
+    const local = localStorage.getItem('user_perpus');    
+    const pc = localStorage.getItem('perpus_pc');    
+    if (pc !== null) {
+      this.pc = pc
+    }
     if(local !== null) {
       const data = JSON.parse(local)
+      this.user = data[0]
       const dataBuku = await this.$axios.$get(`http://localhost:4000/api/borrow/user/${data[0]._id}`)
       this.dataBuku = dataBuku
       if(this.dataBuku.length === 0){

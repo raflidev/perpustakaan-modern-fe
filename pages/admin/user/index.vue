@@ -17,6 +17,7 @@
                     <th class="px-4 py-3">Username</th>
                     <th class="px-4 py-3">Fullname</th>
                     <th class="px-4 py-3">Email</th>
+                    <th class="px-4 py-3">Admin</th>
                     <th class="px-4 py-3">Valid</th>
                     <th class="px-4 py-3">Action</th>
                 </tr>
@@ -25,6 +26,7 @@
                     <td class="px-4 py-3">{{user.username}}</td>
                     <td class="px-4 py-3">{{user.full_name}}</td>
                     <td class="px-4 py-3">{{user.email}}</td>
+                    <td class="px-4 py-3">{{user.role}}</td>
                     <td class="px-4 py-3">{{user.valid}}</td>
                     <td class="px-4 py-3">
                         <router-link :to="'/admin/user/'+user._id+'/edit'" class="px-4 py-2 bg-yellow-300 text-black rounded text-xs">Edit</router-link>

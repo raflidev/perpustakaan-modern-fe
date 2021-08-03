@@ -67,7 +67,6 @@ export default {
     }).then((result) => { 
       if (result.isConfirmed) {
         const user = JSON.parse(localStorage.getItem('user_perpus'))[0];
-
         this.buku.map(buku => {
           this.$axios.post('http://localhost:4000/api/borrow', {
             user_id: user._id,
@@ -141,6 +140,21 @@ export default {
     deleteBook(id){
       const index = this.buku.map(x => x._id).indexOf(id);
       this.buku.splice(index, 1)
+    }
+  },
+  created(){
+    if (typeof window !== 'undefined') {
+      const user = JSON.parse(localStorage.getItem('user_perpus'));
+      if (user == null) {
+        this.$swal.fire('Belum login', 'silakan login terlebih dahulu', 'error');
+        this.$router.push('/auth/login')
+      }else{
+        const pc = localStorage.getItem('perpus_pc');
+        if(!pc) {
+          this.$swal.fire('Tidak punya hak', 'silakan ke perpus untuk meminjam buku. (komputer bukan superuser)', 'error');
+          this.$router.push('/admin')
+        }
+      }
     }
   }
 }

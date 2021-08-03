@@ -11,13 +11,13 @@
             <span class="text-xs font-bold">ADMIN</span>
             <router-link to="/admin/user" active-class="active">User</router-link>
             <router-link to="/admin/buku" active-class="active">Buku</router-link>
+            <router-link to="/pinjam">Pinjam Buku</router-link>
+            <router-link to="/pengembalian">Pengembalian</router-link>
           </div>
           <!-- User -->
 
           <div class="flex flex-col my-5">
             <span class="text-xs font-bold">USER</span>
-            <router-link to="/pinjam">Pinjam Buku</router-link>
-            <router-link to="/pengembalian">Pengembalian</router-link>
             <router-link to="/admin/keterangan" exact-active-class="active">Keterangan</router-link>
             <router-link to="/admin/setting" exact-active-class="active">Setting</router-link>
             <button @click="tryLogout" class="text-left">Logout</button>
