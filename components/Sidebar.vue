@@ -11,6 +11,7 @@
             <span class="text-xs font-bold">ADMIN</span>
             <router-link to="/admin/user" active-class="active">User</router-link>
             <router-link to="/admin/buku" active-class="active">Buku</router-link>
+            <router-link to="/admin/history" active-class="active">History</router-link>
             <router-link to="/pinjam">Pinjam Buku</router-link>
             <router-link to="/pengembalian">Pengembalian</router-link>
           </div>
