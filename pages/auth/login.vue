@@ -11,7 +11,7 @@
                 <div v-if="notification != null" :class="{'bg-green-500': login}" class="text-center bg-red-500 p-2 rounded-md text-white my-3">
                   {{notification}}
                 </div>
-                <div class="my-5 space-y-4">
+                <form class="my-5 space-y-4" @submit.prevent="Trylogin">
                   <div>
                     <label for="email">Email</label>
                     <input id="email" v-model="email" type="email" name="email" placeholder="email" class="rounded-md border-blue-400 border w-full p-2">
@@ -28,9 +28,9 @@
                     <label for="password">Password</label>
                     <input id="password" v-model="password" type="password" name="password" placeholder="password" class="rounded-md border-blue-400 border w-full p-2">
                   </div>
-                <button @click="Trylogin()" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Login</button>
-                <p class="mt-3">Belum punya akun? <router-link class="text-blue-700" to="/auth/register">Register</router-link> </p>
-                </div>
+                  <button type="submit" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Login</button>
+                  <p class="mt-3">Belum punya akun? <router-link class="text-blue-700" to="/auth/register">Register</router-link> </p>
+                </form>
               </div>
           </div>
       </div>
@@ -66,7 +66,7 @@ methods:{
           email: this.email,
           password: this.password
         })
-    
+        console.log(data);
         if (data.request.status === 200 && data.data.length > 0) {
           this.login = true
           this.$swal.fire('Anda Berhasil Login', '', 'success')
