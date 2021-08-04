@@ -116,6 +116,9 @@ export default {
        const pc = localStorage.getItem('perpus_pc');
        this.pc =pc
        this.$swal.fire('Berhasil', "Komputer ini menjadi superuser", 'success');
+       setTimeout(() => {
+         this.$router.go(0)
+       }, 1000);
       }
     })
     },
@@ -131,6 +134,9 @@ export default {
        localStorage.removeItem('perpus_pc');
        this.pc = false
        this.$swal.fire('Berhasil', "Komputer ini bukan superuser lagi", 'success');
+       setTimeout(() => {
+         this.$router.go(0)
+       }, 1000);
       }
     })
     },

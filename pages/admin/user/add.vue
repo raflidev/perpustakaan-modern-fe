@@ -16,7 +16,10 @@
             <h1 class="font-bold text-2xl">
               Tambah User
             </h1>
-            <div class="w-1/2 my-5 space-y-4">
+              <form class="w-1/2 my-5 space-y-4" @submit.prevent="addData">
+                <div v-if="alert" class="bg-red-700 py-2 px-4 text-white rounded">
+                  {{notification}}
+                </div>
                 <div>
                     <label for="username">Username</label>
                     <input id="username" v-model="username" type="text" name="username" placeholder="username" class="rounded-md border-blue-400 border w-full p-2">
@@ -40,6 +43,14 @@
                         Data tidak boleh kosong
                       </span>
                     </div>
+                </div>
+                <div>
+                    <label for="admin">Admin</label>
+                    <select name="admin" id="admin" v-model="admin" class="rounded-md border-blue-400 border w-full p-2">
+                      <option disabled value="">Please select one</option>
+                      <option :value="true">Ya</option>
+                      <option :value="false">Bukan</option>
+                    </select>
                 </div>
                 <div>
                     <label for="email">Email</label>
@@ -93,9 +104,9 @@
                       </span>
                     </div>
                 </div>
-                <button @click="addData()" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Tambah User</button>
+                <button type="submit" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Tambah User</button>
+              </form>
             </div>
-          </div>
          </div>
       </div>
   </div>
@@ -108,6 +119,7 @@ data(){
     return {
         fullname: null,
         username: null,
+        admin: null,
         email: null,
         password: null,
         emailConfirm: false,
@@ -118,6 +130,8 @@ data(){
         notifPassword: false,
         notifConfirm_password: false,
         submit: false,
+        notification: null,
+        alert: false,
     }
 },
 methods: {
@@ -143,7 +157,7 @@ methods: {
                   email: this.email,
                   password: this.password,
                   valid: true,
-                  role: true
+                  role: this.admin,
               }).then(data => {
                   if (data.status == 200) {
                       this.fullname = null,
@@ -153,7 +167,14 @@ methods: {
                       this.confirm_password = null,
                       this.$swal.fire('Buku berhasil ditambahkan', '', 'success')
                   }
+              }).catch(() => {
+                  this.alert = true
+                  this.notification = "email or password has been registered"
+                  setTimeout(() => {
+                      this.alert = false
+                  }, 3000);
               })
+            
           }else{
               if(!this.fullname){
                   this.notifFullname = true

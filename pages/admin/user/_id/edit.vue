@@ -153,8 +153,17 @@ methods: {
                   role: true
               }).then(data => {
                   if (data.status == 200) {
+                    const local = JSON.parse(localStorage.getItem('user_perpus'));
+                    // console.log(local);
+                    if (local[0]._id == this.$route.params.id){
+                      this.$swal.fire('User berhasil diedit', '', 'success')
+                      localStorage.removeItem('user_perpus')
+                      localStorage.setItem('user_perpus', JSON.stringify([data["data"]]))
+                      this.$router.push('/admin/user')
+                    }else{
                       this.$swal.fire('User berhasil diedit', '', 'success')
                       this.$router.push('/admin/user')
+                    }
                   }
               })
           }else{

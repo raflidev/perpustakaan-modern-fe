@@ -2,6 +2,10 @@
    <div class="w-1/6 bg-blue-100 min-h-screen">
         <h1 class="text-center font-bold text-xl my-7">PerpusModern</h1>
         <div class="px-3">
+          <div class="">
+            <p>Halo, <span class="font-bold">{{user.full_name}}</span></p>
+            <p class="text-xs">{{tgl()}}</p>
+          </div>
           <div class="flex flex-col my-5 divide-y">
             <span class="text-xs font-bold">DASHBOARD</span>
             <router-link to="/admin" exact-active-class="active">Dashboard</router-link>
@@ -12,6 +16,10 @@
             <router-link to="/admin/user" active-class="active">User</router-link>
             <router-link to="/admin/buku" active-class="active">Buku</router-link>
             <router-link to="/admin/history" active-class="active">History</router-link>
+          </div>
+
+          <div v-show="pc" class="flex flex-col my-5">
+            <span class="text-xs font-bold uppercase">SUPERUSER</span>
             <router-link to="/pinjam">Pinjam Buku</router-link>
             <router-link to="/pengembalian">Pengembalian</router-link>
           </div>
@@ -28,13 +36,18 @@
 </template>
 
 <script>
+import moment from 'moment';
 export default {
 data(){
     return {
-        user: {}
+        user: {},
+        pc: null
     }
 },
 methods:{
+  tgl(){
+    return moment().format('LL')
+  },
   tryLogout(){
     this.$swal.fire({
       icon: 'question',
@@ -51,6 +64,8 @@ methods:{
 async created() {
   if(typeof window !== 'undefined'){
     const local = localStorage.getItem('user_perpus');
+    const pc = localStorage.getItem('perpus_pc');
+    this.pc = pc
     if(local !== null) {
       const data = JSON.parse(local)
       this.user = data[0];

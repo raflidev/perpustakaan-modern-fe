@@ -31,6 +31,7 @@
                     <td class="px-4 py-3">
                         <router-link :to="'/admin/user/'+user._id+'/edit'" class="px-4 py-2 bg-yellow-300 text-black rounded text-xs">Edit</router-link>
                         <button @click="userDelete(user._id)" class="px-4 py-2 bg-red-600 text-white rounded text-xs">Delete</button>
+                        <button v-if="!user.valid" @click="userValid(user._id)" class="px-4 py-2 bg-green-600 text-white rounded text-xs">Validasi</button>
                     </td>
                 </tr> 
                 </table>
@@ -51,7 +52,7 @@ data(){
 },
 methods:{
     userDelete(id){
-        this.$swal.fire({
+    this.$swal.fire({
       icon: 'question',
       title: 'Ingin Menghapus User?',
       showCancelButton: true,
@@ -66,6 +67,42 @@ methods:{
         })
       }
     })
+    },
+    userValid(id){
+      this.$swal.fire({
+      icon: 'question',
+      title: 'Validasi User?',
+      showCancelButton: true,
+      confirmButtonText: `Ya`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$axios.$get(`http://localhost:4000/api/user/${id}`).then(user => {
+            console.log(user);
+            this.$axios.put(`http://localhost:4000/api/user/${id}`, {
+              full_name: user.fullname,
+              username: user.username,
+              email: user.email,
+              password: user.password,
+              role: user.role,
+              valid: true
+            }).then(() => {
+              this.$swal.fire({
+              icon: 'success',
+              title: 'User berhasil divalidasi',
+              text: 'silakan suruh user login ulang, agar bisa akses page qr code',
+              showCancelButton: false,
+              confirmButtonText: `Ya`
+              }).then(result => {
+                if (result.isConfirmed){
+                  this.$router.go(0)
+                }else{
+                  this.$router.go(0)
+                }
+              })
+            })
+          })
+        }
+      })
     }
 },
 created(){

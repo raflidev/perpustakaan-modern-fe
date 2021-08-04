@@ -155,6 +155,10 @@ export default {
         this.$swal.fire('Belum login', 'silakan login terlebih dahulu', 'error');
         this.$router.push('/auth/login')
       }else{
+        if (!user[0].valid) {
+          this.$swal.fire('Akun belum dikonfirmasi', 'silakan ke perpus untuk daftar ulang', 'error');
+          this.$router.push('/admin')
+        }
         const pc = localStorage.getItem('perpus_pc');
         if(!pc) {
           this.$swal.fire('Tidak punya hak', 'silakan ke perpus untuk meminjam buku. (komputer bukan superuser)', 'error');
