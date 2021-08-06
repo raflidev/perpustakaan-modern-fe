@@ -85,7 +85,12 @@ methods:{
               password: user.password,
               role: user.role,
               valid: true
-            }).then(() => {
+            }).then((data) => {
+              const local = JSON.parse(localStorage.getItem('user_perpus'))
+              if (local[0]._id === data['data']._id) {
+                localStorage.removeItem('user_perpus')
+                localStorage.setItem('user_perpus', JSON.stringify([data['data']]))
+              }
               this.$swal.fire({
               icon: 'success',
               title: 'User berhasil divalidasi',

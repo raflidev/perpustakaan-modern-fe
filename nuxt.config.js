@@ -23,7 +23,8 @@ export default {
   plugins: [
     { src: '@/plugins/vue-qr.js', mode: 'client' },
     { src: '@/plugins/sweetalert.js', mode: 'client' },
-    { src: '@/plugins/qr.js', mode: 'client' }
+    { src: '@/plugins/qr.js', mode: 'client' },
+    { src: '@/plugins/aos.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
