@@ -16,8 +16,8 @@
             <h1 class="font-bold text-2xl">
               Edit Buku
             </h1>
-            <div class="w-1/2 my-5 space-y-4">
-            <div>
+            <form @submit.prevent="editData" class="w-1/2 my-5 space-y-4">
+                <div>
                     <label for="title">Title</label>
                     <input id="title" v-model="title" type="text" name="title" placeholder="Title" class="rounded-md border-blue-400 border w-full p-2">
                     <div class="text-xs text-red-700 flex space-x-1 mt-2" v-if="notifTitle">
@@ -41,8 +41,8 @@
                       </span>
                     </div>
                 </div>
-                <button @click="editData()" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Edit Data</button>
-            </div>
+                <button type="submit" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Edit Data</button>
+            </form>
           </div>
          </div>
       </div>

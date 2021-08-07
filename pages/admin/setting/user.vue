@@ -15,6 +15,16 @@
               Setting
             </h1>
             <form @submit.prevent="checkData" class="w-1/2 my-5 space-y-4">
+              <div v-if="submit && notif" class="bg-red-500 text-white p-2 rounded my-3 flex items-center space-x-1">
+                  <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                      </svg>
+                  </div>
+                  <p>
+                      {{notif}}
+                  </p>
+              </div>
                 <div>
                     <label for="username">Username</label>
                     <input id="username" v-model="username" type="text" name="username" placeholder="username" class="rounded-md border-blue-400 border w-full p-2">
@@ -116,6 +126,7 @@ data(){
       notifPassword: false,
       notifConfirm_password: false,
       submit: false,
+      notif: null
     }
 },
 created() {
@@ -194,7 +205,10 @@ methods: {
               }
           }
           }else{
-            this.$swal.fire('password tidak sama','', 'error')
+            this.notif = "password tidak sama atau data tidak sesuai"
+            setTimeout(() => {
+                this.notif = null
+            }, 3000);
             this.password = ''
             this.confirm_password = ''
           }

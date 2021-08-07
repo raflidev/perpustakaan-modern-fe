@@ -119,7 +119,7 @@ data(){
     return {
         fullname: null,
         username: null,
-        admin: null,
+        admin: false,
         email: null,
         password: null,
         emailConfirm: false,
