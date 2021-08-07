@@ -100,7 +100,7 @@
                         Data tidak boleh kosong
                       </span>
                     </div>
-                  <button type="submit" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Edit User</button>
+                  <button type="submit" class="w-full mt-6 bg-blue-400 rounded-md p-2 font-medium text-white">Edit User</button>
                 </div>
               </form>
             </div>

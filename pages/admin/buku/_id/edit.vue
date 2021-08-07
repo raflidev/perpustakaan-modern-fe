@@ -41,7 +41,7 @@
                       </span>
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Edit Data</button>
+                <button type="submit" class="mt-6 w-full bg-blue-400 rounded-md p-2 font-medium text-white">Edit Data</button>
             </form>
           </div>
          </div>

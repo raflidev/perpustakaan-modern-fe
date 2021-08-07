@@ -41,7 +41,7 @@
                       </span>
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Tambah Data</button>
+                <button type="submit" class="w-full mt-6 bg-blue-400 rounded-md p-2 font-medium text-white">Tambah Data</button>
             </form>
           </div>
          </div>
