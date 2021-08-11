@@ -70,7 +70,14 @@ created(){
           })
         })
     })
-}
+    if(typeof window !== 'undefined'){
+      const local = JSON.parse(localStorage.getItem('user_perpus'))
+      if (!local[0].role) {
+        this.$swal.fire('Tidak punya hak', 'anda bukan admin', 'error');
+        this.$router.push('/admin')
+      }
+    }
+},
 }
 </script>
 
