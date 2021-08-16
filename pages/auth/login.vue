@@ -1,7 +1,7 @@
 <template>
   <div>
       <Navbar/>
-      <div class="min-h-screen mt-10">
+      <div class="min-h-screen mt-40">
           <div class="flex h-full justify-center items-center">
               <div class="w-1/3 min-h-0 bg-white rounded-md p-4 border border-black">
                 <div class="text-center">
@@ -66,7 +66,6 @@ methods:{
           email: this.email,
           password: this.password
         })
-        console.log(data);
         if (data.request.status === 200 && data.data.length > 0) {
           this.login = true
           this.$swal.fire('Anda Berhasil Login', '', 'success')
@@ -74,7 +73,11 @@ methods:{
           this.$store.commit('addUser', data)
           localStorage.setItem("user_perpus", JSON.stringify(data.data))
           setTimeout(() => {
-            this.$router.push('/');
+            if (this.$route.query.next) {
+              this.$router.push(this.$route.query.next);
+            }else{
+              this.$router.push('/admin');
+            }
           }, 2000);
         } else if (data.request.status === 500) {
           this.login = false

@@ -1,7 +1,7 @@
 <template>
   <div>
       <Navbar/>
-      <div class="min-h-screen">
+      <div class="min-h-screen mt-40">
           <div class="flex h-full justify-center items-center">
               <div class="w-1/3 min-h-0 bg-white rounded-md p-4 border border-black my-10">
                 <div class="text-center">
@@ -99,9 +99,11 @@ methods:{
 created(){
   if(typeof window !== 'undefined'){
       const local = JSON.parse(localStorage.getItem('user_perpus'))
-      if (!local[0].role) {
-        this.$swal.fire('Tidak punya hak', 'anda bukan admin', 'error');
-        this.$router.push('/admin')
+      if(local != null) {
+        if (!local[0].role) {
+          this.$swal.fire('Tidak punya hak', 'anda bukan admin', 'error');
+          this.$router.push('/admin')
+        }
       }
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar/>
-    <div class="flex justify-center space-x-6 mt-8">
+    <div class="flex justify-center space-x-6 mt-28">
       <div class="w-1/2 h-3/4">
         <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
           <div v-show="showScanConfirmation" class="scan-confirmation">
@@ -147,7 +147,11 @@ export default {
       const user = JSON.parse(localStorage.getItem('user_perpus'));
       if (user == null) {
         this.$swal.fire('Belum login', 'silakan login terlebih dahulu', 'error');
-        this.$router.push('/auth/login')
+        if (this.$route.query.ft == 1){
+          this.$router.push('/auth/login?next=/pinjam?ft=1')
+        }else{
+          this.$router.push('/auth/login')
+        }
       }else{
         if (!user[0].valid) {
           this.$swal.fire('Akun belum dikonfirmasi', 'silakan ke perpus untuk daftar ulang', 'error');

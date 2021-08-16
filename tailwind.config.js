@@ -1,5 +1,12 @@
 module.exports = {
-    theme: {},
+    theme: {
+      extend: {
+        screens: {
+          'print': {'raw': 'print'},
+          // => @media print { ... }
+        }
+      }
+    },
     variants: {},
     plugins: [
         require('@tailwindcss/forms'),

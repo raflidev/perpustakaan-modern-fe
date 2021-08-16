@@ -153,7 +153,11 @@ export default {
       const user = JSON.parse(localStorage.getItem('user_perpus'));
       if (user == null) {
         this.$swal.fire('Belum login', 'silakan login terlebih dahulu', 'error');
-        this.$router.push('/auth/login')
+        if (this.$route.query.ft == 1){
+          this.$router.push('/auth/login?next=/pinjam?ft=1')
+        }else{
+          this.$router.push('/auth/login')
+        }
       }else{
         if (!user[0].valid) {
           this.$swal.fire('Akun belum dikonfirmasi', 'silakan ke perpus untuk daftar ulang', 'error');

@@ -11,6 +11,7 @@
             <div>
             <div class="my-7">
               <router-link to="/admin/buku/add" class="bg-green-500 px-4 py-2 rounded text-white">Tambah Buku</router-link>   
+              <router-link to="/admin/buku/pdf" class="bg-red-500 px-4 py-2 rounded text-white">Download Semua QRCODE</router-link>   
             </div>
               <table class=" w-5/6 bg-gray-200 text-gray-800">
                 <tr class="text-left border-b-2 border-gray-300">

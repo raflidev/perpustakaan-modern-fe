@@ -2,14 +2,14 @@
   <div class="p-7 border-b-2 border-gray-200 fixed top-0 bg-white w-full z-10">
     <div class="container mx-auto flex justify-between items-center">
       <router-link to="/" class="text-2xl font-bold text-black hover:underline">PerpusModern</router-link>
-      <div>
+      <div v-if="$route.name == 'index'">
         <a href="#home" class="px-4 py-2 hover:text-blue-500" v-scroll-to="{ el: '#home', offset: -200 }">Home</a>
-        <a href="#feature" class="px-4 py-2 hover:text-blue-500" v-scroll-to="{ el: '#feature', offset: 200, duration: 2000 }">Features</a>
+        <a href="#feature" class="px-4 py-2 hover:text-blue-500" v-scroll-to="{ el: '#feature', offset: -100, duration: 2000 }">Features</a>
         <a href="#fasttrack" class="px-4 py-2 hover:text-blue-500" v-scroll-to="{ el: '#fasttrack', offset: -100 }">Fast Track</a>
       </div>
       <div class="space-x-5" v-if="user.length == 0">
         <router-link to="/auth/login" class="hover:bg-blue-700 p-3 rounded text-blue-600 hover:text-white">Login</router-link>
-        <router-link to="/auth/register" class="bg-blue-700 hover:bg-blue-800 p-3 rounded">Register</router-link>
+        <router-link to="/auth/register" class="bg-blue-700 hover:bg-blue-800 p-3 rounded text-white">Register</router-link>
       </div>
       <div class="space-x-5 flex items-center" v-else>
         <!-- <div class="text-lg">Selamat datang, <span class="font-medium">{{ (user.full_name == null) ? user.username : user.full_name }}</span></div> -->
