@@ -7,7 +7,7 @@
           <div class="w-2/6">
             <h1 class="text-5xl font-bold pb-10">Perpustakaan Modern Berbasis Komputer</h1>
             <router-link v-if="user.length === 0" to="/auth/login" class="p-4 bg-blue-500 rounded text-white font-medium text-lg">Mulai Pinjam Buku!</router-link>
-            <router-link v-else to="/admin" class="p-4 bg-blue-500 rounded text-white font-medium text-lg">Mulai Pinjam Buku!</router-link>
+            <router-link v-else to="/admin" class="p-4 bg-blue-500 rounded text-white font-medium text-md">Mulai Pinjam Buku!</router-link>
           </div>
           <div class="w-4/6">
           <img src="/6607.jpg" alt="perpustakaan" class="pt-3">

@@ -10,8 +10,8 @@
         </div>
       </div>
       <div class="flex justify-center space-x-4">
-        <button @click="download" class="inline text-center print:absolute print:bottom-0 print:text-white">Download</button>
-        <router-link to="/admin/buku" @click="download" class="inline text-center hover:text-gray-400 print:absolute print:bottom-0 print:text-white">Back to Admin</router-link>
+        <button @click="download" class="inline text-center bg-green-400 px-4 py-2 rounded text-white print:bottom-0 print:hidden">Download</button>
+        <router-link to="/admin/buku" @click="download" class="inline text-center bg-red-600 px-4 py-2 rounded text-white print:bottom-0 print:hidden">Back to Admin</router-link>
       </div>
       <h1 class="absolute bottom-0 right-0 text-white print:text-black ">Perpustakaan Modern | {{time}} </h1>
   </div>
@@ -38,7 +38,6 @@ export default {
             this.buku = a
         })
         this.time = moment().format('LL')
-        console.log(this.time);
     }
 }
 </script>

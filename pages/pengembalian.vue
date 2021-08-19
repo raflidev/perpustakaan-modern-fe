@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar/>
-    <div class="flex justify-center space-x-6 mt-8">
+    <div class="flex justify-center space-x-6 mt-28">
       <div class="w-1/2 h-3/4">
         <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
           <div v-show="showScanConfirmation" class="scan-confirmation">
@@ -75,17 +75,14 @@ export default {
             book_id: buku._id,
             borrow: this.borrow[index].createAt,
             finishBorrow: this.borrow[index].finishBorrow,
-          }).then(() => {
-            this.borrow.map(borrow => {
-              this.$axios.delete(`http://localhost:4000/api/borrow/${borrow._id}`)
-            })
-            this.$swal.fire('Berhasil Mengembalikan buku', '', 'success')
-            this.buku = []
-            this.borrow = []
-            }).catch(err => {
-            this.$swal.fire('Gagal Mengembalikan buku', err, 'error')
           })
         })
+        // this.borrow.map(borrow => {
+        //   this.$axios.delete(`http://localhost:4000/api/borrow/${borrow._id}`)
+        // })
+        this.$swal.fire('Berhasil Mengembalikan buku', '', 'success')
+        // this.buku = []
+        // this.borrow = []
       }
     })
     },
