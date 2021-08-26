@@ -66,12 +66,16 @@ methods:{
           email: this.email,
           password: this.password
         })
-        if (data.request.status === 200 && data.data.length > 0) {
+        if (data.request.status === 200 && data.data.token != null) {
           this.login = true
           this.$swal.fire('Anda Berhasil Login', '', 'success')
           this.notification = "berhasil login"
-          this.$store.commit('addUser', data)
-          localStorage.setItem("user_perpus", JSON.stringify(data.data))
+          this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+            token: data.data.token
+          }).then(dataToken => {
+            this.$store.commit('addUser', dataToken.data.user[0])
+          })
+          localStorage.setItem("user_perpus", JSON.stringify(data.data.token))
           setTimeout(() => {
             if (this.$route.query.next) {
               this.$router.push(this.$route.query.next);

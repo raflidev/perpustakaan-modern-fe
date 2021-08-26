@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-      <Sidebar/>
+      <Sidebar :name="user.full_name" :role="user.role" :pc="pc" />
       <div class="w-5/6 h-screen">
         <div class="p-10">
           <div class="space-y-2 mb-6">
@@ -92,8 +92,8 @@ export default {
       buku: [],
       dataBuku: [],
       checkContent: true,
-      user: [],
       pc: false,
+      user: []
     }
   },
   methods: {
@@ -150,14 +150,18 @@ export default {
     }
     if(local !== null) {
       const data = JSON.parse(local)
-      this.user = data[0]
-      const dataBuku = await this.$axios.$get(`http://localhost:4000/api/borrow/user/${data[0]._id}`)
+      this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+        token: data
+      }).then(dataToken => {
+        this.user = dataToken.data.user[0]
+      })
+      const dataBuku = await this.$axios.$get(`${process.env.apiUri}/api/borrow/user/${this.user._id}`)
       this.dataBuku = dataBuku
       if(this.dataBuku.length === 0){
         this.checkContent = false
       }
       dataBuku.map(async (x) => {
-        const buku = await this.$axios.$get(`http://localhost:4000/api/book/${x.book_id}`)
+        const buku = await this.$axios.$get(`${process.env.apiUri}/api/book/${x.book_id}`)
         this.buku.push(buku)
       })
     }
