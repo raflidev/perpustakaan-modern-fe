@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-      <Sidebar :name="user.full_name" :role="user.role" :pc="pc" />
+      <Sidebar/>
       <div class="w-5/6 h-screen">
         <div class="p-10">
           <div class="space-y-2 mb-6">

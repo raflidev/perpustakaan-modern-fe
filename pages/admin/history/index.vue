@@ -127,17 +127,20 @@ computed: {
     return this.book.sort(compare);
   }
 },
-created(){
+mounted(){
     this.$axios.$get('http://localhost:4000/api/user').then(users => {
       this.users = users
     })
-    if(typeof window !== 'undefined'){
-      const local = JSON.parse(localStorage.getItem('user_perpus'))
-      if (!local[0].role) {
-        this.$swal.fire('Tidak punya hak', 'anda bukan admin', 'error');
-        this.$router.push('/admin')
-      }
-    }
+    const local = JSON.parse(localStorage.getItem('user_perpus'))
+    this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+      token: local
+    }).then(dataToken => {
+        this.user = dataToken.data.user[0]
+        if (!this.user.role) {
+          this.$swal.fire('Tidak punya hak', 'anda bukan admin', 'error');
+          this.$router.push('/admin')
+        }
+    })
 },
 }
 </script>

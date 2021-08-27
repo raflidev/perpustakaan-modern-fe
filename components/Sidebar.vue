@@ -3,7 +3,7 @@
         <h1 class="text-center font-bold text-xl my-7">PerpusModern</h1>
         <div class="px-3">
           <div class="">
-            <p>Halo, <span class="font-bold">{{name}}</span></p>
+            <p>Halo, <span class="font-bold">{{user.full_name}}</span></p>
             <p class="text-xs">{{tgl()}}</p>
           </div>
           <div class="flex flex-col my-5 divide-y">
@@ -11,7 +11,7 @@
             <router-link to="/admin" exact-active-class="active">Dashboard</router-link>
           </div>
           <!-- Petugas -->
-          <div v-show="role" class="flex flex-col my-5">
+          <div v-show="user.role" class="flex flex-col my-5">
             <span class="text-xs font-bold">ADMIN</span>
             <router-link to="/admin/user" active-class="active">User</router-link>
             <router-link to="/admin/buku" active-class="active">Buku</router-link>
@@ -38,7 +38,12 @@
 <script>
 import moment from 'moment';
 export default {
-props:['name', 'role', 'pc'],
+data(){
+  return{
+    user: [],
+    pc: false,
+  }
+},
 methods:{
   tgl(){
     return moment().format('LL')
@@ -56,6 +61,15 @@ methods:{
     })
   }
 },
+mounted(){
+  const local = JSON.parse(localStorage.getItem('user_perpus'))
+  this.pc = JSON.parse(localStorage.getItem('perpus_pc'))
+  this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+    token: local
+  }).then(dataToken => {
+      this.user = dataToken.data.user[0]
+  })
+}
 }
 </script>
 

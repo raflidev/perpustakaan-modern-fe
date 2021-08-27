@@ -22,7 +22,7 @@
                     <th class="px-4 py-3">Action</th>
                 </tr>
                 
-                <tr class="bg-gray-100 border-b border-gray-200" v-for='user in user' :key='user.index'>
+                <tr class="bg-gray-100 border-b border-gray-200" v-for='user in users' :key='user.index'>
                     <td class="px-4 py-3">{{user.username}}</td>
                     <td class="px-4 py-3">{{user.full_name}}</td>
                     <td class="px-4 py-3">{{user.email}}</td>
@@ -47,7 +47,8 @@ export default {
 name:"buku",
 data(){
     return{
-        user:[]
+        user:[],
+        users: []
     }
 },
 methods:{
@@ -110,18 +111,21 @@ methods:{
       })
     }
 },
-created(){
-    this.$axios.$get('http://localhost:4000/api/user').then(user => {
-        this.user = user
-    })
-    if(typeof window !== 'undefined'){
+mounted(){
+   this.$axios.$get(`${process.env.apiUri}/api/user`).then(users => {
+        this.users = users
+      })
       const local = JSON.parse(localStorage.getItem('user_perpus'))
-      if (!local[0].role) {
-        this.$swal.fire('Tidak punya hak', 'anda bukan admin', 'error');
-        this.$router.push('/admin')
-      }
-    }
-}
+      this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+        token: local
+      }).then(dataToken => {
+          this.user = dataToken.data.user[0]
+          if (!this.user.role) {
+            this.$swal.fire('Tidak punya hak', 'anda bukan admin', 'error');
+            this.$router.push('/admin')
+          }
+      })
+},
 }
 </script>
 
