@@ -92,7 +92,16 @@ data(){
       notifPassword: false,
       notifConfirm_password: false,
       submit: false,
+      user: [],
     }
+},
+mounted(){
+  const local = JSON.parse(localStorage.getItem('user_perpus'))
+  this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+    token: local
+  }).then(dataToken => {
+      this.user = dataToken.data.user[0]
+  })
 },
 methods: {
     checkData(){
@@ -119,16 +128,20 @@ methods: {
                 this.notifConfirm_password = false
             }, 3000);
         }
-        const local = JSON.parse(localStorage.getItem("user_perpus"));
-        if (local[0].password == this.password_lama && this.password === this.confirm_password) {
-            this.$axios.put(`http://localhost:4000/api/user/${local[0]._id}`, {
+        if (this.user.password == this.password_lama && this.password === this.confirm_password) {
+            this.$axios.put(`${process.env.apiUri}/api/user/${this.user._id}`, {
               password: this.password
             }).then(data => {
                 if (data.status == 200) {
                 localStorage.removeItem('user_perpus')
-                localStorage.setItem('user_perpus', JSON.stringify([data["data"]]))
-                this.$swal.fire('Data berhasil diedit', '', 'success')
-                this.$router.push('/admin')
+                this.$axios.post(`${process.env.apiUri}/api/login`, {
+                  email: data.data.email,
+                  password: data.data.password,
+                }).then(dataToken => {
+                  localStorage.setItem('user_perpus', JSON.stringify(dataToken.data.token))
+                  this.$swal.fire('Data berhasil diedit', '', 'success')
+                  this.$router.push('/admin')
+                })
                 }
             })
         } else {

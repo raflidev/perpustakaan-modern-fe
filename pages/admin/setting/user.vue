@@ -126,18 +126,20 @@ data(){
       notifPassword: false,
       notifConfirm_password: false,
       submit: false,
-      notif: null
+      notif: null,
+      user: [],
     }
 },
-created() {
-    if (typeof window !== 'undefined') {
-      const local = JSON.parse(localStorage.getItem("user_perpus"));
-      this.$axios.$get(`http://localhost:4000/api/user/${local[0]._id}`).then(user => {
-          this.fullname = user.full_name;
-          this.username = user.username;
-          this.email = user.email;
-      })
-    }
+mounted(){
+  const local = JSON.parse(localStorage.getItem('user_perpus'))
+  this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+    token: local
+  }).then(dataToken => {
+      this.user = dataToken.data.user[0]
+      this.fullname = this.user.full_name
+      this.username = this.user.username
+      this.email = this.user.email
+  })
 },
 methods: {
     regexEmail(){
@@ -153,12 +155,11 @@ methods: {
         setTimeout(() => {
             this.submit = false
         }, 3000);
-        const local = JSON.parse(localStorage.getItem("user_perpus"));
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(re.test(this.email)){
-          if ((local[0].password == this.password && this.confirm_password == local[0].password)) {
+          if ((this.user.password == this.password && this.confirm_password == this.user.password)) {
           if(this.fullname != null || this.username != null || this.email != null || this.password != null || this.confirm_password != null) {
-              this.$axios.put(`http://localhost:4000/api/user/${local[0]._id}`, {
+              this.$axios.put(`${process.env.apiUri}/api/user/${this.user._id}`, {
                   full_name: this.fullname,
                   username: this.username,
                   email: this.email,
@@ -166,10 +167,16 @@ methods: {
                   role: true
               }).then(data => {
                   if (data.status == 200) {
+                    console.log(data);
                     localStorage.removeItem('user_perpus')
-                    localStorage.setItem('user_perpus', JSON.stringify([data["data"]]))
-                    this.$swal.fire('Data berhasil diedit', '', 'success')
-                    this.$router.push('/admin')
+                    this.$axios.post(`${process.env.apiUri}/api/login`, {
+                      email: data.data.email,
+                      password: data.data.password
+                    }).then(dataToken => {
+                      localStorage.setItem('user_perpus', JSON.stringify(dataToken.data.token))
+                      this.$swal.fire('Data berhasil diedit', '', 'success')
+                      this.$router.push('/admin')
+                    })
                   }
               })
           }else{

@@ -55,6 +55,7 @@ export default {
       showScanConfirmation: false,
       a: null,
       buku: [],
+      user: [],
     }
   },
   methods: {
@@ -142,7 +143,7 @@ export default {
       this.buku.splice(index, 1)
     }
   },
-  created(){
+  mounted(){
     if (typeof window !== 'undefined') {
       const user = JSON.parse(localStorage.getItem('user_perpus'));
       if (user == null) {
@@ -153,15 +154,20 @@ export default {
           this.$router.push('/auth/login')
         }
       }else{
-        if (!user[0].valid) {
-          this.$swal.fire('Akun belum dikonfirmasi', 'silakan ke perpus untuk daftar ulang', 'error');
-          this.$router.push('/admin')
-        }
-        const pc = localStorage.getItem('perpus_pc');
-        if(!pc) {
-          this.$swal.fire('Tidak punya hak', 'silakan ke perpus untuk meminjam buku. (komputer bukan superuser)', 'error');
-          this.$router.push('/admin')
-        }
+        this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+          token: user
+        }).then(dataToken => {
+          this.user = dataToken.data.user[0]
+          if (!this.user.valid) {
+            this.$swal.fire('Akun belum dikonfirmasi', 'silakan ke perpus untuk daftar ulang', 'error');
+            this.$router.push('/admin')
+          }
+          const pc = localStorage.getItem('perpus_pc');
+          if(!pc) {
+            this.$swal.fire('Tidak punya hak', 'silakan ke perpus untuk meminjam buku. (komputer bukan superuser)', 'error');
+            this.$router.push('/admin')
+          }
+        })
       }
     }
   }

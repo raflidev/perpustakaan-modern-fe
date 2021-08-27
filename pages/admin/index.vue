@@ -141,7 +141,7 @@ export default {
     })
     },
   },
-  async created() {
+  async mounted() {
     if(typeof window !== 'undefined'){
     const local = localStorage.getItem('user_perpus');    
     const pc = localStorage.getItem('perpus_pc');    
@@ -154,15 +154,17 @@ export default {
         token: data
       }).then(dataToken => {
         this.user = dataToken.data.user[0]
-      })
-      const dataBuku = await this.$axios.$get(`${process.env.apiUri}/api/borrow/user/${this.user._id}`)
-      this.dataBuku = dataBuku
-      if(this.dataBuku.length === 0){
-        this.checkContent = false
-      }
-      dataBuku.map(async (x) => {
-        const buku = await this.$axios.$get(`${process.env.apiUri}/api/book/${x.book_id}`)
-        this.buku.push(buku)
+        this.$axios.get(`${process.env.apiUri}/api/borrow/user/${dataToken.data.user[0]._id}`).
+        then(dataBuku => {
+          this.dataBuku = dataBuku.data
+          if(this.dataBuku.length === 0){
+            this.checkContent = false
+          }
+          this.dataBuku.map(async (x) => {
+            const buku = await this.$axios.$get(`${process.env.apiUri}/api/book/${x.book_id}`)
+            this.buku.push(buku)
+          })
+        })
       })
     }
   } 
