@@ -96,11 +96,14 @@ const local = JSON.parse(localStorage.getItem('user_perpus'))
   this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
     token: local
   }).then(dataToken => {
-      this.user = dataToken.data.user[0]
+      this.user = dataToken.data.user
       if (!this.user.role) {
         this.$swal.fire('Tidak punya hak', 'anda bukan admin', 'error');
         this.$router.push('/admin')
       }
+  }).catch(() => {
+    localStorage.removeItem('user_perpus')
+    this.$router.push('/auth/login')
   })
 },
 }

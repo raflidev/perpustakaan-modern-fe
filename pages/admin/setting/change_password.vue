@@ -100,7 +100,10 @@ mounted(){
   this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
     token: local
   }).then(dataToken => {
-      this.user = dataToken.data.user[0]
+      this.user = dataToken.data.user
+  }).catch(() => {
+    localStorage.removeItem('user_perpus')
+    this.$router.push('/auth/login')
   })
 },
 methods: {

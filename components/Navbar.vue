@@ -12,7 +12,6 @@
         <router-link to="/auth/register" class="bg-blue-700 hover:bg-blue-800 p-3 rounded text-white">Register</router-link>
       </div>
       <div class="space-x-5 flex items-center" v-else>
-        <!-- <div class="text-lg">Selamat datang, <span class="font-medium">{{ (user.full_name == null) ? user.username : user.full_name }}</span></div> -->
         <router-link to="/admin" class="text-black hover:text-white hover:bg-blue-800 hover:font-bold px-4 py-2 rounded font-medium">Admin</router-link>
         <router-link to="/logout" class="bg-blue-800 px-4 py-2 rounded font-bold text-white">Logout</router-link>
       </div>

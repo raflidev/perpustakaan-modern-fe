@@ -33,7 +33,7 @@
             </div>
             <div v-else>
               <p class="bg-red-400 rounded p-4 text-white w-1/2">
-                Library anda kosong, silakan pinjam buku
+                History tidak ada
               </p>
             </div>
           </div>
@@ -72,12 +72,6 @@
               </div>
             </div>
           </div>
-
-          
-          <div class="mt-10" v-if='user.role'>
-            <button v-if="!pc" class="py-2 px-4 bg-blue-600 text-white rounded" @click="superUser">Jadikan Komputer Superuser</button>
-            <button v-else class="py-2 px-4 bg-blue-600 text-white rounded" @click="nonSuperUser">Non-aktifkan Komputer Superuser</button>
-          </div>
         </div>
       </div>
   </div>
@@ -103,43 +97,6 @@ export default {
     deadline(date) {
       return moment().isBefore(date)
     },
-    superUser() {
-      this.$swal.fire({
-      title: 'Jadikan Komputer Superuser?',
-      icon: 'question',
-      text: 'komputer ini akan jadi alat pinjam dan pengembalian buku',
-      showCancelButton: true,
-      confirmButtonText: `Ya`,
-    }).then((result) => { 
-      if (result.isConfirmed) {
-       localStorage.setItem("perpus_pc", true);
-       const pc = localStorage.getItem('perpus_pc');
-       this.pc =pc
-       this.$swal.fire('Berhasil', "Komputer ini menjadi superuser", 'success');
-       setTimeout(() => {
-         this.$router.go(0)
-       }, 1000);
-      }
-    })
-    },
-    nonSuperUser() {
-      this.$swal.fire({
-      title: 'Berhentikan Komputer Superuser?',
-      icon: 'question',
-      text: 'status komputer ini hilang jadi alat pinjam dan pengembalian buku',
-      showCancelButton: true,
-      confirmButtonText: `Ya`,
-    }).then((result) => { 
-      if (result.isConfirmed) {
-       localStorage.removeItem('perpus_pc');
-       this.pc = false
-       this.$swal.fire('Berhasil', "Komputer ini bukan superuser lagi", 'success');
-       setTimeout(() => {
-         this.$router.go(0)
-       }, 1000);
-      }
-    })
-    },
   },
   async mounted() {
     if(typeof window !== 'undefined'){
@@ -150,25 +107,34 @@ export default {
     }
     if(local !== null) {
       const data = JSON.parse(local)
-      this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
-        token: data
-      }).then(dataToken => {
-        this.user = dataToken.data.user
-        this.$axios.get(`${process.env.apiUri}/api/borrow/user/${dataToken.data.user._id}`).
-        then(dataBuku => {
-          this.dataBuku = dataBuku.data
-          if(this.dataBuku.length === 0){
-            this.checkContent = false
-          }
-          this.dataBuku.map(async (x) => {
-            const buku = await this.$axios.$get(`${process.env.apiUri}/api/book/${x.book_id}`)
-            this.buku.push(buku)
+      try {
+        
+      } catch (error) {
+        
+      }
+        this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+          token: data
+        }).then(dataToken => {
+          this.user = dataToken.data.user
+          this.$axios.get(`${process.env.apiUri}/api/history/user/${dataToken.data.user._id}`).
+          then(dataBuku => {
+            this.dataBuku = dataBuku.data
+            console.log(dataBuku);
+            if(this.dataBuku.length === 0){
+              this.checkContent = false
+            }
+            const cek = [];
+            this.dataBuku.map(async (x) => {
+              const buku = await this.$axios.$get(`${process.env.apiUri}/api/book/${x.book_id}`)
+              cek.push(buku)
+            })
+            this.buku = cek
           })
-        })
-      }).catch(() => {
+        }).catch(() => {
           localStorage.removeItem('user_perpus')
           this.$router.push('/auth/login')
         })
+      
     }
   } 
   }

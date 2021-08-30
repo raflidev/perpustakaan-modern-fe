@@ -157,7 +157,7 @@ export default {
         this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
           token: user
         }).then(dataToken => {
-          this.user = dataToken.data.user[0]
+          this.user = dataToken.data.user
           if (!this.user.valid) {
             this.$swal.fire('Akun belum dikonfirmasi', 'silakan ke perpus untuk daftar ulang', 'error');
             this.$router.push('/admin')
@@ -167,6 +167,9 @@ export default {
             this.$swal.fire('Tidak punya hak', 'silakan ke perpus untuk meminjam buku. (komputer bukan superuser)', 'error');
             this.$router.push('/admin')
           }
+        }).catch(() => {
+          localStorage.removeItem('user_perpus')
+          this.$router.push('/auth/login')
         })
       }
     }

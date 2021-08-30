@@ -9,6 +9,7 @@
           <div class="flex flex-col my-5 divide-y">
             <span class="text-xs font-bold">DASHBOARD</span>
             <router-link to="/admin" exact-active-class="active">Dashboard</router-link>
+            <router-link to="/admin/user_history" exact-active-class="active">History</router-link>
           </div>
           <!-- Petugas -->
           <div v-show="user.role" class="flex flex-col my-5">
@@ -27,7 +28,6 @@
 
           <div class="flex flex-col my-5">
             <span class="text-xs font-bold">USER</span>
-            <router-link to="/admin/keterangan" exact-active-class="active">Keterangan</router-link>
             <router-link to="/admin/setting" exact-active-class="active">Setting</router-link>
             <button @click="tryLogout" class="text-left">Logout</button>
           </div>
@@ -67,7 +67,10 @@ mounted(){
   this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
     token: local
   }).then(dataToken => {
-      this.user = dataToken.data.user[0]
+      this.user = dataToken.data.user
+  }).catch(() => {
+    localStorage.removeItem('user_perpus')
+    this.$router.push('/auth/login')
   })
 }
 }

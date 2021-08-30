@@ -113,7 +113,7 @@ created(){
     const local = localStorage.getItem('user_perpus');
     if (local !== null) {
       const user = JSON.parse(local)
-      this.user = user[0]
+      this.user = user
     }
   }
 }

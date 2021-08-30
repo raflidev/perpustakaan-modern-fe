@@ -56,6 +56,7 @@ export default {
       a: null,
       buku: [],
       borrow:[],
+      user:[],
     }
   },
   methods: {
@@ -67,18 +68,16 @@ export default {
       confirmButtonText: `Kembalikan`,
     }).then((result) => { 
       if (result.isConfirmed) {
-        const user = JSON.parse(localStorage.getItem('user_perpus'))[0];
-
         this.buku.map((buku, index) => {
-          this.$axios.post('http://localhost:4000/api/history', {
-            user_id: user._id,
+          this.$axios.post(`${process.env.apiUri}/api/history`, {
+            user_id: this.user._id,
             book_id: buku._id,
             borrow: this.borrow[index].createAt,
             finishBorrow: this.borrow[index].finishBorrow,
           })
         })
         this.borrow.map(borrow => {
-          this.$axios.delete(`http://localhost:4000/api/borrow/${borrow._id}`)
+          this.$axios.delete(`${process.env.apiUri}/api/borrow/${borrow._id}`)
         })
         this.$swal.fire('Berhasil Mengembalikan buku', '', 'success')
         this.buku = []
@@ -126,11 +125,10 @@ export default {
           this.$swal.fire('Cukup scan 1 kali saja', '', 'error');
         }
         if (cekIndex == -1) {
-          const user = JSON.parse(localStorage.getItem('user_perpus'))[0];
-          const daftarBuku = await this.$axios.$get(`http://localhost:4000/api/borrow/${kode}/user/${user._id}`);
+          const daftarBuku = await this.$axios.$get(`${process.env.apiUri}/api/borrow/${kode}/user/${this.user._id}`);
           if (daftarBuku.length > 0) {
           this.borrow.push(daftarBuku[0])
-          const buku = await this.$axios.$get(`http://localhost:4000/api/book/${kode}`)
+          const buku = await this.$axios.$get(`${process.env.apiUri}/api/book/${kode}`)
           this.buku.push(buku)
           }
           if (daftarBuku.length == 0) {
@@ -159,7 +157,7 @@ export default {
         this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
           token: user
         }).then(dataToken => {
-          this.user = dataToken.data.user[0]
+          this.user = dataToken.data.user
           if (!this.user.valid) {
             this.$swal.fire('Akun belum dikonfirmasi', 'silakan ke perpus untuk daftar ulang', 'error');
             this.$router.push('/admin')
@@ -169,6 +167,9 @@ export default {
             this.$swal.fire('Tidak punya hak', 'silakan ke perpus untuk meminjam buku. (komputer bukan superuser)', 'error');
             this.$router.push('/admin')
           }
+        }).catch(() => {
+          localStorage.removeItem('user_perpus')
+          this.$router.push('/auth/login')
         })
       }
     }
