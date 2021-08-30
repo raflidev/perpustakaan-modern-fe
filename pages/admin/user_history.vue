@@ -51,22 +51,9 @@
                 <div class="pt-4">
                   <div>
                     <span class="font-medium">
-                      Status: 
-                    </span>
-                    <span v-if="deadline(dataBuku[index].finishBorrow)" class="text-green-500 font-bold">Dipinjamkan</span>
-                    <span v-else class="text-red-500 font-bold">Segera Kembalikan</span>
-                  </div>
-                  <div>
-                    <span class="font-medium">
                       Meminjam: 
                     </span>
                     {{tanggal(dataBuku[index].createAt)}}
-                  </div>
-                  <div>
-                    <span class="font-medium">
-                      Kembalikan Sebelum: 
-                    </span>
-                    {{tanggal(dataBuku[index].finishBorrow)}}
                   </div>
                 </div>
               </div>
@@ -119,7 +106,6 @@ export default {
           this.$axios.get(`${process.env.apiUri}/api/history/user/${dataToken.data.user._id}`).
           then(dataBuku => {
             this.dataBuku = dataBuku.data
-            console.log(dataBuku);
             if(this.dataBuku.length === 0){
               this.checkContent = false
             }

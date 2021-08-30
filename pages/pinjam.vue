@@ -11,13 +11,15 @@
       <div class="w-1/2">
         <h1 class="text-2xl font-medium">Buku yang akan dipinjam</h1>
         <p class="decode-result">Scanan Terakhir: <b>{{ result }}</b></p>
-
+        <div class="mt-3">
+          <a href="/admin/buku/pdf" class="bg-red-600 px-4 py-2 rounded-md font-medium text-white">LIST SEMUA QRCODE</a>
+        </div>
         <div class="mt-4">
           <div v-if="buku.length == 0">
             <p class="text-center font-bold mt-60">Silakan Scan QR Code Untuk Menginput Buku</p>
           </div>
           <div class="overflow-y-auto h-96">
-            <div  v-for="buku in buku" :key="buku.index" class="w-full bg-blue-100 border-2 border-black rounded p-4 mb-6">
+            <div v-for="buku in buku" :key="buku.index" class="w-full bg-blue-100 border-2 border-black rounded p-4 mb-6">
               <div class="flex justify-between items-center">
                 <div>
                   <div class="text-xl font-bold">
@@ -67,10 +69,9 @@ export default {
       confirmButtonText: `Pinjam`,
     }).then((result) => { 
       if (result.isConfirmed) {
-        const user = JSON.parse(localStorage.getItem('user_perpus'))[0];
         this.buku.map(buku => {
-          this.$axios.post('http://localhost:4000/api/borrow', {
-            user_id: user._id,
+          this.$axios.post(`${process.env.apiUri}/api/borrow`, {
+            user_id: this.user._id,
             book_id: buku._id
           }).then(() => {
           this.$swal.fire('Berhasil meminjam buku', '', 'success')
@@ -122,18 +123,20 @@ export default {
           this.$swal.fire('buku hanya boleh dipinjam 1', '', 'error');
         }
         if (cekIndex == -1) {
-          const user = JSON.parse(localStorage.getItem('user_perpus'))[0];
-          const daftarBuku = await this.$axios.$get(`http://localhost:4000/api/borrow/${kode}/user/${user._id}`);
-          console.log(daftarBuku);
-          if (daftarBuku.length > 0) {
-          this.$swal.fire('buku sudah anda pinjam', '', 'error');
-          }
-          if (daftarBuku.length == 0) {
-            const buku = await this.$axios.$get(`http://localhost:4000/api/book/${kode}`)
-            this.buku.push(buku)
-            this.result = buku.name
-            this.notification = `Berhasil menambahkan ${buku.name}`
-          }
+          this.$axios.$get(`${process.env.apiUri}/api/borrow/${kode}/user/${this.user._id}`)
+          .then(daftarBuku => {
+            if (daftarBuku.length > 0) {
+            this.$swal.fire('buku sudah anda pinjam', '', 'error');
+            }
+            if (daftarBuku.length == 0) {
+              this.$axios.$get(`${process.env.apiUri}/api/book/${kode}`).then(buku => {
+                this.buku.push(buku)
+                this.result = buku.name
+                this.$swal.fire(`Berhasil menambahkan ${buku.name}`, '', 'success');
+              })
+            }
+          });
+         
         }
       }
     },

@@ -7,6 +7,24 @@
                 <div class="text-center">
                     <h1 class="font-bold text-2xl">Login</h1>
                     <p>Selamat datang, Silakan login terlebih dahulu</p>
+                    <div class="flex-row text-sm">
+                      <div class="flex justify-center space-x-2">
+                        <p>
+                          demo admin:   
+                        </p>
+                        <div>
+                          demo@demo.com | demo
+                        </div>
+                      </div>
+                      <div class="flex justify-center space-x-2">
+                        <p>
+                          demo user:
+                        </p>
+                        <div>
+                          user@demo.com | user
+                        </div>
+                      </div>
+                    </div>
                 </div>
                 <div v-if="notification != null" :class="{'bg-green-500': login}" class="text-center bg-red-500 p-2 rounded-md text-white my-3">
                   {{notification}}
