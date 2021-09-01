@@ -80,7 +80,7 @@ methods:{
   async Trylogin(){
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(this.email)) {
-        const data = await this.$axios.post(`${process.env.NUXT_ENV_apiUri}/api/login`, {
+        const data = await this.$axios.post(`${process.env.apiUri}/api/login`, {
           email: this.email,
           password: this.password
         })
@@ -88,19 +88,17 @@ methods:{
           this.login = true
           this.$swal.fire('Anda Berhasil Login', '', 'success')
           this.notification = "berhasil login"
-          this.$axios.post(`${process.env.NUXT_ENV_apiUri}/api/veriftoken`, {
+          this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
             token: data.data.token
           }).then(dataToken => {
             this.$store.commit('addUser', dataToken.data.user[0])
           })
           localStorage.setItem("user_perpus", JSON.stringify(data.data.token))
-          setTimeout(() => {
-            if (this.$route.query.next) {
-              this.$router.push(this.$route.query.next);
-            }else{
-              this.$router.push('/admin');
-            }
-          }, 2000);
+          if (this.$route.query.next) {
+            this.$router.push(this.$route.query.next);
+          }else{
+            this.$router.push('/admin');
+          }
         } else if (data.request.status === 500) {
           this.login = false
           this.$swal.fire('Server error 500', 'ada kesalahan server, mohon tunggu beberapa saat', 'error')
