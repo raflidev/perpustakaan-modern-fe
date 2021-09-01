@@ -27,7 +27,6 @@ export default {
     { src: '@/plugins/vue-qr.js', mode: 'client' },
     { src: '@/plugins/sweetalert.js', mode: 'client' },
     { src: '@/plugins/qr.js', mode: 'client' },
-    { src: '@/plugins/aos.js', mode: 'client' },
     { src: '@/plugins/pdf.js', mode: 'client' },
   ],
 

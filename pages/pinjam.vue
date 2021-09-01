@@ -148,6 +148,10 @@ export default {
   },
   mounted(){
     if (typeof window !== 'undefined') {
+      if(window.innerWidth < 1280) {
+        this.$swal.fire('Masalah Perangkat', 'silakan menggunakan PC', 'error');
+        this.$router.push('/admin')
+      }
       const user = JSON.parse(localStorage.getItem('user_perpus'));
       if (user == null) {
         this.$swal.fire('Belum login', 'silakan login terlebih dahulu', 'error');

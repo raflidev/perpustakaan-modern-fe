@@ -2,8 +2,8 @@
   <div>
       <Navbar/>
       <div class="min-h-screen mt-40">
-          <div class="flex h-full justify-center items-center">
-              <div class="w-1/3 min-h-0 bg-white rounded-md p-4 border border-black my-10">
+          <div class="flex h-full justify-center items-center px-5 lg:px-0">
+              <div class="w-full lg:w-1/3 min-h-0 bg-white rounded-md p-4 border border-black my-10">
                 <div class="text-center">
                     <h1 class="font-bold text-2xl">Register</h1>
                     <p>Silakan buat akun terlebih dahulu</p>
@@ -70,7 +70,7 @@ methods:{
   tryRegis(){
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(re.test(this.email)){
-      this.$axios.$post("http://localhost:4000/api/user", {
+      this.$axios.$post(`${process.env.apiUri}/api/user`, {
         full_name:this.full_name,
         email:this.email,
         username:this.username,
@@ -100,10 +100,7 @@ created(){
   if(typeof window !== 'undefined'){
       const local = JSON.parse(localStorage.getItem('user_perpus'))
       if(local != null) {
-        if (!local[0].role) {
-          this.$swal.fire('Tidak punya hak', 'anda bukan admin', 'error');
-          this.$router.push('/admin')
-        }
+        this.$router.push('/admin')
       }
     }
 }

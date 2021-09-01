@@ -2,8 +2,8 @@
   <div>
       <Navbar/>
       <div class="min-h-screen mt-40">
-          <div class="flex h-full justify-center items-center">
-              <div class="w-1/3 min-h-0 bg-white rounded-md p-4 border border-black">
+          <div class="flex h-full justify-center items-center px-5 lg:px-0">
+              <div class="w-full lg:w-1/3 min-h-0 bg-white rounded-md p-4 border border-black">
                 <div class="text-center">
                     <h1 class="font-bold text-2xl">Login</h1>
                     <p>Selamat datang, Silakan login terlebih dahulu</p>

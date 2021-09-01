@@ -11,7 +11,7 @@
           </div>
            <!-- animate-pulse -->
           <div v-if="buku.length == 0">
-            <div class="grid grid-cols-3 gap-4" v-if="checkContent">
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4" v-if="checkContent">
               <div class="bg-blue-100 p-4 rounded divide-y divide-black animate-pulse" v-for="a in 3" :key="a.index">
                 <div class="pb-4">
                   <h1 class="font-bold text-xl w-full h-8 bg-blue-300 rounded">
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div v-else>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
               <div class="bg-blue-100 p-4 rounded divide-y divide-black" v-for="(buku, index) in buku" :key="buku.index">
                 <div class="pb-4">
                   <h1 class="font-bold text-xl">
