@@ -1,5 +1,5 @@
 <template>
-<div class="w-1/6 bg-blue-100">
+<div class="w-full lg:w-1/6 bg-blue-100">
     <div class="hidden lg:inline w-1/6 bg-blue-100 min-h-screen">
     <div class="w-full">
         <h1 class="text-center font-bold text-xl my-7">PerpusModern</h1>
