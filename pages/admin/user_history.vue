@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
       <Sidebar/>
-      <div class="w-5/6 h-screen">
+      <div class="w-full lg:w-5/6 h-screen">
         <div class="p-10">
           <div class="space-y-2 mb-6">
             <h1 class="font-bold text-2xl">
@@ -32,7 +32,7 @@
               </div>
             </div>
             <div v-else>
-              <p class="bg-red-400 rounded p-4 text-white w-1/2">
+              <p class="bg-red-400 rounded p-4 text-white w-full lg:w-1/2">
                 History tidak ada
               </p>
             </div>

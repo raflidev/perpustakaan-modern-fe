@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
       <Sidebar/>
-      <div class="w-5/6 min-h-screen">
+      <div class="w-full lg:w-5/6 min-h-screen">
          <div class="p-10">
              <nav class="rounded font-sans w-full mb-4">
             <ol class="list-reset flex text-grey-dark space-x-2">
@@ -14,7 +14,7 @@
             <h1 class="font-bold text-2xl">
               Setting
             </h1>
-            <form @submit.prevent="checkData" class="w-1/2 my-5 space-y-4">
+            <form @submit.prevent="checkData" class="w-full lg:w-1/2 my-5 space-y-4">
               <div v-if="submit && notif" class="bg-red-500 text-white p-2 rounded my-3 flex items-center space-x-1">
                   <div>
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
