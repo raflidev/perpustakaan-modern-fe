@@ -131,7 +131,7 @@ data(){
     }
 },
 created() {
-    this.$axios.$get(`http://localhost:4000/api/user/${this.$route.params.id}`).then(user => {
+    this.$axios.$get(`${process.env.apiUri}/api/user/${this.$route.params.id}`).then(user => {
         this.fullname = user.full_name;
         this.username = user.username;
         this.email = user.email;
@@ -157,7 +157,7 @@ methods: {
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(re.test(this.email)){
           if(this.fullname != null || this.username != null || this.email != null || this.password != null || this.confirm_password != null) {
-              this.$axios.put(`http://localhost:4000/api/user/${this.$route.params.id}`, {
+              this.$axios.put(`${process.env.apiUri}/api/user/${this.$route.params.id}`, {
                   full_name: this.fullname,
                   username: this.username,
                   email: this.email,

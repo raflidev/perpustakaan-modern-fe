@@ -9,6 +9,9 @@
             </h1>
             <p>Detail Buku-Buku Yang Dipinjam</p>
           </div>
+          <p v-if="!user.valid" class="bg-yellow-400 rounded p-4 w-full lg:w-1/2 mb-5">
+             User Belum tervalidasi, Akun tidak bisa meminjam buku. Silakan hubungi admin untuk divalidasi. <br> Atau gunakan akun demo untuk meminjam buku
+          </p>
            <!-- animate-pulse -->
           <div v-if="buku.length == 0">
             <div class="grid grid-cols-2 lg:grid-cols-3 gap-4" v-if="checkContent">

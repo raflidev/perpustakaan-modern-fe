@@ -34,7 +34,7 @@ export default {
         }
     },
     created(){
-        this.$axios.$get('http://localhost:4000/api/book').then(a => {
+        this.$axios.$get(`${process.env.apiUri}/api/book`).then(a => {
             this.buku = a
         })
         this.time = moment().format('LL')

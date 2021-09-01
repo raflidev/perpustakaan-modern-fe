@@ -86,7 +86,7 @@ methods:{
       confirmButtonText: `Ya`
     }).then((result) => {
       if (result.isConfirmed) {
-        this.$axios.delete(`http://localhost:4000/api/book/${id}`).then(data => {
+        this.$axios.delete(`${process.env.apiUri}/api/book/${id}`).then(data => {
             if(data.status == 200) {
                 this.$swal.fire('Buku berhasil dihapus', '' , 'success')
                 this.$router.go(0)
@@ -97,7 +97,7 @@ methods:{
     }
 },
 mounted(){
-  this.$axios.$get('http://localhost:4000/api/book').then(buku => {
+  this.$axios.$get(`${process.env.apiUri}/api/book`).then(buku => {
       this.buku = buku
   })
   const local = JSON.parse(localStorage.getItem('user_perpus'))

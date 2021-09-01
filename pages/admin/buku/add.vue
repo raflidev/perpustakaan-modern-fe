@@ -64,7 +64,7 @@ data(){
 methods: {
     addData(){
         if(this.author != null || this.title != null) {
-            this.$axios.post('http://localhost:4000/api/book', {
+            this.$axios.post(`${process.env.apiUri}/api/book`, {
                 name: this.title,
                 author: this.author,
             }).then(data => {

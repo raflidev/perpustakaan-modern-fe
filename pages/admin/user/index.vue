@@ -60,7 +60,7 @@ methods:{
       confirmButtonText: `Ya`
     }).then((result) => {
       if (result.isConfirmed) {
-        this.$axios.delete(`http://localhost:4000/api/user/${id}`).then(data => {
+        this.$axios.delete(`${process.env.apiUri}/api/user/${id}`).then(data => {
             if(data.status == 200) {
                 this.$swal.fire('User berhasil dihapus', '' , 'success')
                 this.$router.go(0)
@@ -77,9 +77,9 @@ methods:{
       confirmButtonText: `Ya`
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$axios.$get(`http://localhost:4000/api/user/${id}`).then(user => {
+          this.$axios.$get(`${process.env.apiUri}/api/user/${id}`).then(user => {
             console.log(user);
-            this.$axios.put(`http://localhost:4000/api/user/${id}`, {
+            this.$axios.put(`${process.env.apiUri}/api/user/${id}`, {
               full_name: user.fullname,
               username: user.username,
               email: user.email,

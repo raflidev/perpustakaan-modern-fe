@@ -99,10 +99,10 @@ data(){
 },
 methods:{
     historyModal(user){
-      this.$axios.$get(`http://localhost:4000/api/history/user/${user._id}`).then(his => {
+      this.$axios.$get(`${process.env.apiUri}/api/history/user/${user._id}`).then(his => {
         this.history = his
         this.history.map(his => {
-           this.$axios.$get(`http://localhost:4000/api/book/${his.book_id}`).then(book => {
+           this.$axios.$get(`${process.env.apiUri}/api/book/${his.book_id}`).then(book => {
             this.book.push(book);
           })
         })

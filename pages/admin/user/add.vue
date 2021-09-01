@@ -152,7 +152,7 @@ methods: {
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(re.test(this.email)){
           if(this.fullname != null || this.username != null || this.email != null || this.password != null || this.confirm_password != null) {
-              this.$axios.post('http://localhost:4000/api/user', {
+              this.$axios.post(`${process.env.apiUri}/api/user`, {
                   full_name: this.fullname,
                   username: this.username,
                   email: this.email,

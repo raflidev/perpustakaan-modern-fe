@@ -62,7 +62,7 @@ data(){
     }
 },
 created() {
-    this.$axios.$get(`http://localhost:4000/api/book/${this.$route.params.id}`).then(buku => {
+    this.$axios.$get(`${process.env.apiUri}/api/book/${this.$route.params.id}`).then(buku => {
         this.author = buku.author,
         this.title = buku.name
     })
@@ -70,7 +70,7 @@ created() {
 methods: {
     editData(){
         if(this.author != null || this.title != null) {
-            this.$axios.put(`http://localhost:4000/api/book/${this.$route.params.id}`, {
+            this.$axios.put(`${process.env.apiUri}/api/book/${this.$route.params.id}`, {
                 name: this.title,
                 author: this.author
             }).then(data => {
