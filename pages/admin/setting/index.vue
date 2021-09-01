@@ -2,14 +2,14 @@
    <div class="flex">
       <Sidebar/>
       <div class="w-full lg:w-5/6 min-h-screen">
-        <div class="p-10">
+        <div class="p-10 pb-32 lg:pb-0">
           <div class="space-y-2 mb-6">
             <h1 class="font-bold text-2xl">
               Setting
             </h1>
             <p>Halaman Setting </p>
             <div>
-              <div class="my-7 grid grid-flow-row gap-4 grid-cols-2 lg:grid-cols-3">
+              <div class="my-7 grid grid-flow-row gap-4 grid-cols-1 lg:grid-cols-3">
                 <div class="px-4 py-5 bg-blue-100 rounded-md w-full">
                   <div class="mb-4">
                     <p class="font-bold text-xl">Ubah Profile</p>

@@ -2,19 +2,19 @@
   <div class="flex">
       <Sidebar/>
       <div class="w-full lg:w-5/6 h-screen">
-        <div class="p-10">
+        <div class="p-10 pb-32 lg:pb-0">
           <div class="space-y-2 mb-6">
             <h1 class="font-bold text-2xl">
               Buku yang anda pinjam
             </h1>
             <p>Detail Buku-Buku Yang Dipinjam</p>
           </div>
-          <p v-if="!user.valid" class="bg-yellow-400 rounded p-4 w-full lg:w-1/2 mb-5">
+          <p v-if="!checkvalid" class="bg-yellow-400 rounded p-4 w-full lg:w-1/2 mb-5">
              User Belum tervalidasi, Akun tidak bisa meminjam buku. Silakan hubungi admin untuk divalidasi. <br> Atau gunakan akun demo untuk meminjam buku
           </p>
            <!-- animate-pulse -->
           <div v-if="buku.length == 0">
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4" v-if="checkContent">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4" v-if="checkContent">
               <div class="bg-blue-100 p-4 rounded divide-y divide-black animate-pulse" v-for="a in 3" :key="a.index">
                 <div class="pb-4">
                   <h1 class="font-bold text-xl w-full h-8 bg-blue-300 rounded">
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div v-else>
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div class="bg-blue-100 p-4 rounded divide-y divide-black" v-for="(buku, index) in buku" :key="buku.index">
                 <div class="pb-4">
                   <h1 class="font-bold text-xl">
@@ -77,9 +77,9 @@
           </div>
 
           
-          <div class="mt-10" v-if='user.role'>
-            <button v-if="!pc" class="py-2 px-4 bg-blue-600 text-white rounded text-left" @click="superUser">Jadikan Komputer Superuser</button>
-            <button v-else class="py-2 px-4 bg-blue-600 text-white rounded text-left" @click="nonSuperUser">Non-aktifkan Komputer Superuser</button>
+          <div class="hidden lg:inline mt-10" v-if='user.role'>
+            <button v-if="!pc" class="py-2 px-4 bg-blue-600 mt-10 text-white rounded text-left" @click="superUser">Jadikan Komputer Superuser</button>
+            <button v-else class="py-2 px-4 bg-blue-600 mt-10 text-white rounded text-left" @click="nonSuperUser">Non-aktifkan Komputer Superuser</button>
           </div>
         </div>
       </div>
@@ -95,6 +95,7 @@ export default {
       buku: [],
       dataBuku: [],
       checkContent: true,
+      checkvalid: true,
       pc: false,
       user: []
     }
@@ -157,6 +158,9 @@ export default {
         token: data
       }).then(dataToken => {
         this.user = dataToken.data.user
+        if(!this.user.valid) {
+          this.checkvalid = false
+        }
         this.$axios.get(`${process.env.apiUri}/api/borrow/user/${dataToken.data.user._id}`).
         then(dataBuku => {
           this.dataBuku = dataBuku.data

@@ -2,7 +2,7 @@
   <div class="flex">
       <Sidebar/>
       <div class="w-full lg:w-5/6 min-h-screen">
-         <div class="p-10">
+         <div class="p-10 pb-32 lg:pb-0">
              <nav class="rounded font-sans w-full mb-4">
             <ol class="list-reset flex text-grey-dark space-x-2">
                 <li><router-link to="/admin" class="text-blue font-bold hover:text-blue-600">Dashboard</router-link></li>

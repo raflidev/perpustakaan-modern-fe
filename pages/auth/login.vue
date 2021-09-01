@@ -46,7 +46,13 @@
                     <label for="password">Password</label>
                     <input id="password" v-model="password" type="password" name="password" placeholder="password" class="rounded-md border-blue-400 border w-full p-2">
                   </div>
-                  <button type="submit" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white">Login</button>
+                <button type="submit" class="w-full bg-blue-400 rounded-md p-2 font-medium text-white flex justify-center items-center" :disabled="login">
+                    <svg v-if="login" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Login</span>
+                  </button>
                   <p class="mt-3">Belum punya akun? <router-link class="text-blue-700" to="/auth/register">Register</router-link> </p>
                 </form>
               </div>
@@ -78,6 +84,7 @@ created(){
 methods:{
 
   async Trylogin(){
+    this.login = true
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(this.email)) {
         const data = await this.$axios.post(`${process.env.apiUri}/api/login`, {
@@ -85,7 +92,6 @@ methods:{
           password: this.password
         })
         if (data.request.status === 200 && data.data.token != null) {
-          this.login = true
           this.$swal.fire('Anda Berhasil Login', '', 'success')
           this.notification = "berhasil login"
           this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
@@ -109,6 +115,7 @@ methods:{
           this.notification = "email atau password anda salah"
         }
       } else {
+        this.login = false
         this.notifEmail = true;
         setTimeout(() => {
           this.notifEmail = false;

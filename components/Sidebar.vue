@@ -1,5 +1,5 @@
 <template>
-<div class="w-full lg:w-1/6 bg-blue-100">
+<div class="w-0 lg:w-1/6 bg-blue-100">
     <div class="hidden lg:inline w-1/6 bg-blue-100 min-h-screen">
     <div class="w-full">
         <h1 class="text-center font-bold text-xl my-7">PerpusModern</h1>
@@ -36,7 +36,7 @@
         </div>
     </div>
     </div>
-    <div class="fixed bottom-0 p-5 lg:hidden w-full bg-blue-100 text-xs">
+    <div class="z-10 fixed bottom-0 p-5 lg:hidden w-full bg-blue-100 text-xs">
       <div class="flex justify-between w-full items-center">
         <div>
           <router-link to="/admin/" exact-active-class="active">
