@@ -80,7 +80,7 @@ methods:{
   async Trylogin(){
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(this.email)) {
-        const data = await this.$axios.post(`${process.env.apiUri}/api/login`, {
+        const data = await this.$axios.post(`${process.env.NUXT_ENV_apiUri}/api/login`, {
           email: this.email,
           password: this.password
         })
@@ -88,7 +88,7 @@ methods:{
           this.login = true
           this.$swal.fire('Anda Berhasil Login', '', 'success')
           this.notification = "berhasil login"
-          this.$axios.post(`${process.env.apiUri}/api/veriftoken`, {
+          this.$axios.post(`${process.env.NUXT_ENV_apiUri}/api/veriftoken`, {
             token: data.data.token
           }).then(dataToken => {
             this.$store.commit('addUser', dataToken.data.user[0])
