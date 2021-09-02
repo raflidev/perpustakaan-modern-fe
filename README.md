@@ -164,7 +164,7 @@ Project Link: [https://github.com/raflidev/perpustakaan-modern-fe](https://githu
 [issues-shield]: https://img.shields.io/github/issues/raflidev/perpustakaan-modern-fe.svg?style=for-the-badge
 [issues-url]: https://github.com/raflidev/perpustakaan-modern-fe/issues
 [license-shield]: https://img.shields.io/github/license/raflidev/perpustakaan-modern-fe.svg?style=for-the-badge
-[license-url]: https://github.com/raflidev/perpustakaan-modern-fe/blob/master/LICENSE.txt
+[license-url]: https://github.com/raflidev/perpustakaan-modern-fe/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/raflidev
 [product-screenshot]:   web-screenshot.png
