@@ -91,7 +91,6 @@ methods:{
           email: this.email,
           password: this.password
         }).then(data => {
-          console.log(data);
           if (data.request.status === 200 && data.data.token != null) {
             this.$swal.fire('Anda Berhasil Login', '', 'success')
             this.notification = "berhasil login"
